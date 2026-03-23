@@ -25,7 +25,8 @@ export default function Login() {
   async function handleRegister(e) {
     e.preventDefault()
     setLoading(true); setError('')
-    const { error } = await supabase.auth.signUp({
+    // 1. Créer le compte Supabase
+    const { error: signUpError } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
       options: {
@@ -33,9 +34,21 @@ export default function Login() {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`
       }
     })
-    if (error) { setError(error.message); setLoading(false); return }
-    router.push('/dashboard')
-    router.refresh()
+    if (signUpError) { setError(signUpError.message); setLoading(false); return }
+    // 2. Connecter immédiatement
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: form.email, password: form.password
+    })
+    if (loginError) { setError(loginError.message); setLoading(false); return }
+    // 3. Rediriger vers Stripe checkout (plan Solo par défaut)
+    const res = await fetch('/api/stripe/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: 'solo' })
+    })
+    const data = await res.json()
+    if (data.url) window.location.href = data.url
+    else { setError('Erreur Stripe.'); setLoading(false) }
   }
  
   async function handleReset(e) {
@@ -205,3 +218,4 @@ export default function Login() {
 const lbl = { display: 'block', fontSize: 11, fontWeight: 600, color: '#94a3b8', marginBottom: 6, letterSpacing: '0.5px', textTransform: 'uppercase' }
 const inp = { width: '100%', padding: '12px 14px', background: '#f7f8fa', border: '1px solid rgba(0,0,0,0.09)', borderRadius: 8, color: '#0f1729', fontSize: 14, transition: 'border-color 0.15s, box-shadow 0.15s', fontFamily: 'inherit', outline: 'none' }
 const btn = { width: '100%', padding: '13px 0', textAlign: 'center', background: '#1e3a6e', border: 'none', borderRadius: 9, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4, boxShadow: '0 2px 8px rgba(30,58,110,0.25)', transition: 'all 0.15s', fontFamily: 'inherit' }
+ 
