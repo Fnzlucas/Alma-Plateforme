@@ -200,5 +200,5 @@ export default function Login() {
  
 const lbl = { display: 'block', fontSize: 11, fontWeight: 600, color: '#94a3b8', marginBottom: 6, letterSpacing: '0.5px', textTransform: 'uppercase' }
 const inp = { width: '100%', padding: '12px 14px', background: '#f7f8fa', border: '1px solid rgba(0,0,0,0.09)', borderRadius: 8, color: '#0f1729', fontSize: 14, transition: 'border-color 0.15s, box-shadow 0.15s', fontFamily: 'inherit', outline: 'none' }
-const btn = { width: '100%', padding: '13px 0', background: '#1e3a6e', border: 'none', borderRadius: 9, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4, boxShadow: '0 2px 8px rgba(30,58,110,0.25)', transition: 'all 0.15s', fontFamily: 'inherit' }
+const btn = { width: '100%', padding: '13px 0', textAlign: 'center', background: '#1e3a6e', border: 'none', borderRadius: 9, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4, boxShadow: '0 2px 8px rgba(30,58,110,0.25)', transition: 'all 0.15s', fontFamily: 'inherit' }
  
