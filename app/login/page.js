@@ -87,7 +87,7 @@ export default function Login() {
         <div style={{ width: '100%', maxWidth: 460, margin: '0 auto', position: 'relative', zIndex: 1 }}>
  
           {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ textAlign: 'center', marginBottom: 28, width: '100%' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(30,58,110,0.07)', border: '1px solid rgba(30,58,110,0.14)', padding: '5px 13px', borderRadius: 99, fontSize: 11.5, fontWeight: 600, color: '#1e3a6e', marginBottom: 20 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#2563eb' }}/>
               Accès sécurisé · Données chiffrées
