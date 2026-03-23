@@ -9,7 +9,6 @@ export async function GET() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) redirect('/')
 
-  // Charger toutes les données de l'utilisateur
   const { data: rows } = await supabase
     .from('food_data')
     .select('key, value')
@@ -20,20 +19,24 @@ export async function GET() {
 
   let html = readFileSync(join(process.cwd(), 'public', 'food-app.html'), 'utf8')
 
-  // Injecter les données ET l'URL API directement dans le HTML
-  const injection = `
-<script>
-window.__INIT_DATA__ = ${JSON.stringify(foodData)};
-window.__API_BASE__ = '';
-// Pré-hydrater localStorage avec les données Supabase
-if (window.__INIT_DATA__) {
-  Object.entries(window.__INIT_DATA__).forEach(([k,v]) => {
-    try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){}
+  const injection = `<script>
+// Données pré-chargées depuis Supabase
+;(function(){
+  const data = ${JSON.stringify(foodData)};
+  Object.entries(data).forEach(([k,v])=>{
+    try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){}
   });
-}
+  // Override dbSet/dbGet pour sauvegarder vers Supabase
+  window.dbSet = async function(key, value){
+    try{ await fetch('/api/food-data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value})}); }catch(e){}
+  };
+  window.dbGet = async function(key){
+    try{ const r=await fetch('/api/food-data?key='+key); const d=await r.json(); return d.value; }catch(e){ return null; }
+  };
+})();
 </script>`
 
-  html = html.replace('<script>', injection + '\n<script>')
+  html = html.replace('</head>', injection + '</head>')
 
   return new NextResponse(html, {
     headers: { 'Content-Type': 'text/html; charset=utf-8' }
