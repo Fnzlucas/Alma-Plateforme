@@ -4,16 +4,16 @@ import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
  
 const MODULES = [
-  { id: 'finances', icon: '📊', label: 'Finances & Trésorerie', desc: 'CA, dépenses, marges, flux de tréso' },
-  { id: 'facturation', icon: '🧾', label: 'Facturation & Devis', desc: 'Factures, devis, relances auto' },
-  { id: 'stocks', icon: '📦', label: 'Stocks & Inventaire', desc: 'Gestion produits, alertes rupture' },
-  { id: 'crm', icon: '👥', label: 'CRM Clients', desc: 'Historique, suivi, relances' },
-  { id: 'equipe', icon: '🏷️', label: 'Équipe & RH', desc: 'Plannings, congés, coûts employés' },
-  { id: 'caisse', icon: '🖥️', label: 'Connexion Caisse', desc: 'SumUp, Square, Zettle...' },
-  { id: 'calendrier', icon: '📅', label: 'Calendrier', desc: 'Événements, rdv, planning' },
-  { id: 'rapports', icon: '📈', label: 'Rapports & Stats', desc: 'Analyses, exports PDF/Excel' },
-  { id: 'km', icon: '🚗', label: 'Frais Kilométriques', desc: 'Suivi trajets, remboursements' },
-  { id: 'amortissement', icon: '🔧', label: 'Amortissements', desc: 'Matériel, équipements' },
+  { id: 'finances', label: 'Finances & Trésorerie', desc: 'CA, dépenses, marges, flux de tréso' },
+  { id: 'facturation', label: 'Facturation & Devis', desc: 'Factures, devis, relances auto' },
+  { id: 'stocks', label: 'Stocks & Inventaire', desc: 'Gestion produits, alertes rupture' },
+  { id: 'crm', label: 'CRM Clients', desc: 'Historique, suivi, relances' },
+  { id: 'equipe', label: 'Équipe & RH', desc: 'Plannings, congés, coûts employés' },
+  { id: 'caisse', label: 'Connexion Caisse', desc: 'SumUp, Square, Zettle...' },
+  { id: 'calendrier', label: 'Calendrier', desc: 'Événements, rdv, planning' },
+  { id: 'rapports', label: 'Rapports & Stats', desc: 'Analyses, exports PDF/Excel' },
+  { id: 'km', label: 'Frais Kilométriques', desc: 'Suivi trajets, remboursements' },
+  { id: 'amortissement', label: 'Amortissements', desc: 'Matériel, équipements' },
 ]
  
 export default function Onboarding() {
@@ -29,15 +29,14 @@ export default function Onboarding() {
   }
  
   async function finish() {
-    if (!business.trim()) return
-    if (modules.length === 0) return
+    if (!business.trim() || modules.length === 0) return
     setLoading(true)
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) { router.push('/login'); return }
     await fetch('/api/food-data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: 'onboarding', value: { business, modules, done: true } })
+      body: JSON.stringify({ key: 'onboarding', value: { business, modules, done: true, createdAt: new Date().toISOString() } })
     })
     router.push('/dashboard')
   }
@@ -68,7 +67,6 @@ export default function Onboarding() {
           </div>
           <span style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 15, fontWeight: 800, color: '#0f1729', letterSpacing: '-0.5px' }}>Alma<span style={{ color: '#1e3a6e' }}>.co</span></span>
         </div>
-        {/* Steps */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {[1, 2, 3].map(s => (
             <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -85,11 +83,13 @@ export default function Onboarding() {
  
         <div style={{ width: '100%', maxWidth: step === 2 ? 680 : 480, margin: '0 auto', position: 'relative', zIndex: 1 }}>
  
-          {/* STEP 1 — Nom business */}
+          {/* STEP 1 */}
           {step === 1 && (
             <div>
               <div style={{ textAlign: 'center', marginBottom: 36 }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>🏢</div>
+                <div style={{ width: 56, height: 56, borderRadius: 14, background: 'rgba(30,58,110,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a6e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
                 <h1 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 32, fontWeight: 900, letterSpacing: '-1.2px', color: '#0f1729', marginBottom: 10 }}>Comment s'appelle<br/>votre entreprise ?</h1>
                 <p style={{ fontSize: 15, color: '#4a5568' }}>Ce nom apparaîtra sur votre dashboard et vos documents.</p>
               </div>
@@ -107,18 +107,22 @@ export default function Onboarding() {
             </div>
           )}
  
-          {/* STEP 2 — Choix modules */}
+          {/* STEP 2 */}
           {step === 2 && (
             <div>
               <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>⚙️</div>
+                <div style={{ width: 56, height: 56, borderRadius: 14, background: 'rgba(30,58,110,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a6e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </div>
                 <h1 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 32, fontWeight: 900, letterSpacing: '-1.2px', color: '#0f1729', marginBottom: 10 }}>Quels modules<br/>souhaitez-vous activer ?</h1>
                 <p style={{ fontSize: 15, color: '#4a5568' }}>Choisissez au moins un module. Vous pourrez en ajouter plus tard.</p>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
                 {MODULES.map(m => (
                   <div key={m.id} className={`mod-card${modules.includes(m.id) ? ' selected' : ''}`} onClick={() => toggleModule(m.id)}>
-                    <span style={{ fontSize: 22, flexShrink: 0 }}>{m.icon}</span>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: modules.includes(m.id) ? 'rgba(30,58,110,0.1)' : '#f0f2f6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke={modules.includes(m.id) ? '#1e3a6e' : '#94a3b8'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/></svg>
+                    </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: '#0f1729' }}>{m.label}</div>
                       <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>{m.desc}</div>
@@ -139,11 +143,13 @@ export default function Onboarding() {
             </div>
           )}
  
-          {/* STEP 3 — Confirmation */}
+          {/* STEP 3 */}
           {step === 3 && (
             <div>
               <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>🚀</div>
+                <div style={{ width: 56, height: 56, borderRadius: 14, background: 'rgba(22,163,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
                 <h1 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 32, fontWeight: 900, letterSpacing: '-1.2px', color: '#0f1729', marginBottom: 10 }}>Tout est prêt<br/>pour <span style={{ color: '#1e3a6e' }}>{business}</span> !</h1>
                 <p style={{ fontSize: 15, color: '#4a5568' }}>Voici un récapitulatif de votre espace avant d'y accéder.</p>
               </div>
@@ -158,7 +164,7 @@ export default function Onboarding() {
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {modules.map(id => {
                       const m = MODULES.find(x => x.id === id)
-                      return <span key={id} style={{ background: 'rgba(30,58,110,0.07)', color: '#1e3a6e', fontSize: 12, fontWeight: 600, padding: '4px 10px', borderRadius: 6 }}>{m?.icon} {m?.label}</span>
+                      return <span key={id} style={{ background: 'rgba(30,58,110,0.07)', color: '#1e3a6e', fontSize: 12, fontWeight: 600, padding: '4px 10px', borderRadius: 6 }}>{m?.label}</span>
                     })}
                   </div>
                 </div>
@@ -181,3 +187,4 @@ export default function Onboarding() {
     </>
   )
 }
+ 
