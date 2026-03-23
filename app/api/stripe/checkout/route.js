@@ -32,8 +32,3 @@ export async function POST(request) {
 
   return NextResponse.json({ url: checkoutSession.url })
 }
-```
-
-Ensuite ajoute `stripe` dans `package.json` — cherche la ligne `"@supabase/ssr"` et ajoute juste après :
-```
-"stripe": "^14.0.0",
