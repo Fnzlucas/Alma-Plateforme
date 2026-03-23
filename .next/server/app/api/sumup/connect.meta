@@ -1,0 +1,1 @@
+{"status":307,"headers":{"location":"https://api.sumup.com/authorize?response_type=code&client_id=&redirect_uri=https%3A%2F%2Falma-plateforme.vercel.app%2Fapi%2Fsumup%2Fcallback&scope=transactions.history+me","x-next-cache-tags":"_N_T_/layout,_N_T_/api/layout,_N_T_/api/sumup/layout,_N_T_/api/sumup/connect/layout,_N_T_/api/sumup/connect/route,_N_T_/api/sumup/connect"}}
