@@ -1509,8 +1509,8 @@ function loadKmHist(){try{return JSON.parse(localStorage.getItem('cm_km')||'[]')
 function loadPrices(w){try{return JSON.parse(localStorage.getItem(w+'_prices')||'{}');}catch(e){return {};}}
 function savePrices(w,p){localStorage.setItem(w+'_prices',JSON.stringify(p));dbSet(w+'_prices',p);}
 
-let SF = loadState('sf_inv_v4', SF_DEFAULT);
-let CM = loadState('cm_inv_v1', CM_DEFAULT);
+let SF = loadState('inv_v1', []);
+let CM = loadState('inv_v1', []);
 let AMORT = loadAmort();
 let KM_HIST = loadKmHist();
 let currentWorld = 'sf';
