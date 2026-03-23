@@ -40,15 +40,8 @@ export default function Login() {
       email: form.email, password: form.password
     })
     if (loginError) { setError(loginError.message); setLoading(false); return }
-    // 3. Rediriger vers Stripe checkout (plan Solo par défaut)
-    const res = await fetch('/api/stripe/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan: 'solo' })
-    })
-    const data = await res.json()
-    if (data.url) window.location.href = data.url
-    else { setError('Erreur Stripe.'); setLoading(false) }
+    // 3. Aller vers l'onboarding
+    router.push('/onboarding')
   }
  
   async function handleReset(e) {
@@ -189,7 +182,7 @@ export default function Login() {
                   <div><label style={lbl}>Nom de votre entreprise</label><input className="alma-input" style={inp} type="text" placeholder="Ma Société SAS" value={form.entreprise} onChange={e => setForm({...form, entreprise: e.target.value})} required/></div>
                   <div><label style={lbl}>Mot de passe</label><input className="alma-input" style={inp} type="password" placeholder="8 caractères minimum" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required minLength={8}/></div>
                   <button className="alma-btn" type="submit" disabled={loading} style={btn}>
-                    {loading ? 'Création...' : <span style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>Démarrer mon essai gratuit <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}
+                    {loading ? 'Création en cours...' : <span style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>Démarrer mon essai gratuit <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}
                   </button>
                 </form>
                 <p style={{ fontSize: 11, color: '#94a3b8', textAlign: 'center', marginTop: 14, lineHeight: 1.6 }}>
