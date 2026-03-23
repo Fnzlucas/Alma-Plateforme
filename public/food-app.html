@@ -1140,7 +1140,52 @@ body{background:var(--bg);color:var(--text1)}
 </div><!-- /main -->
 
 <div class="save-indicator" id="save-ind">✓ Sauvegardé</div>
+<!-- MODAL PRODUIT -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal" style="width:480px">
+    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
+    <input type="hidden" id="pm-id"/>
+    <input type="hidden" id="pm-world"/>
+    <div class="modal-grid">
+      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
+      <div class="modal-field"><label class="modal-label">Catégorie</label>
+        <select class="modal-input" id="pm-cat">
+          <option value="boissons">🥤 Boissons</option>
+          <option value="consommables">📦 Consommables</option>
+          <option value="alimentaire">🍔 Alimentaire</option>
+        </select>
+      </div>
+      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
+      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil alerte 🟡</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil critique 🔴</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
+    </div>
+  </div>
+</div>
 
+<!-- MODAL AJUSTEMENT STOCK -->
+<div class="modal-overlay" id="adj-modal">
+  <div class="modal" style="width:380px">
+    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
+    <input type="hidden" id="adj-id"/>
+    <input type="hidden" id="adj-world"/>
+    <div style="margin-bottom:14px">
+      <label class="modal-label">Stock actuel</label>
+      <div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div>
+    </div>
+    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
+    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue, Inventaire..."/></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
+    </div>
+  </div>
+</div>
 <!-- ═══ MODALS ═══ -->
 <!-- MODAL EMPLOYE -->
 <div class="modal-overlay" id="emp-modal" style="display:none">
