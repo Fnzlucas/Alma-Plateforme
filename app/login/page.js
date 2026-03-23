@@ -49,8 +49,8 @@ export default function Login() {
   }
  
   const titles = {
-    login: { title: 'Accédez à votre espace de pilotage.', sub: 'Votre entreprise vous attend.' },
-    register: { title: 'Pilotez votre activité dès aujourd\'hui.', sub: '7 jours gratuits, sans engagement.' },
+    login: { title: 'Accédez à votre\nespace de pilotage.', sub: 'Votre entreprise vous attend.' },
+    register: { title: "Pilotez votre activité\ndès aujourd'hui.", sub: '7 jours gratuits, sans engagement.' },
   }
  
   return (
@@ -58,12 +58,12 @@ export default function Login() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Inter+Tight:wght@700;800;900&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', system-ui, sans-serif; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #f7f8fa; }
         .alma-input::placeholder { color: #94a3b8; }
         .alma-input:focus { border-color: #1e3a6e !important; outline: none; box-shadow: 0 0 0 3px rgba(30,58,110,0.08) !important; background: #fff !important; }
         .alma-btn:hover:not(:disabled) { background: #152d57 !important; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,58,110,0.3) !important; }
         .alma-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .alma-tab { flex: 1; padding: 9px; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; background: transparent; color: #94a3b8; }
+        .alma-tab { flex: none; padding: 9px 24px; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; background: transparent; color: #94a3b8; white-space: nowrap; }
         .alma-tab.active { background: #fff; color: #0f1729; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
         .alma-forgot:hover { color: #1e3a6e !important; }
         .alma-nav-back:hover { color: #4a5568 !important; background: #f7f8fa !important; }
@@ -87,15 +87,15 @@ export default function Login() {
         <div style={{ width: '100%', maxWidth: 460, margin: '0 auto', position: 'relative', zIndex: 1 }}>
  
           {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: 28, width: '100%' }}>
+          <div style={{ textAlign: 'center', marginBottom: 28 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(30,58,110,0.07)', border: '1px solid rgba(30,58,110,0.14)', padding: '5px 13px', borderRadius: 99, fontSize: 11.5, fontWeight: 600, color: '#1e3a6e', marginBottom: 20 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#2563eb' }}/>
               Accès sécurisé · Données chiffrées
             </div>
-            <h1 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 34, fontWeight: 900, letterSpacing: '-1.5px', color: '#0f1729', lineHeight: 1.1, marginBottom: 10 }}>
+            <h1 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: 34, fontWeight: 900, letterSpacing: '-1.5px', color: '#0f1729', lineHeight: 1.15, marginBottom: 10, textAlign: 'center', whiteSpace: 'pre-line' }}>
               {titles[tab].title}
             </h1>
-            <p style={{ fontSize: 15, color: '#4a5568', lineHeight: 1.6 }}>{titles[tab].sub}</p>
+            <p style={{ fontSize: 15, color: '#4a5568', lineHeight: 1.6, textAlign: 'center' }}>{titles[tab].sub}</p>
           </div>
  
           {/* Card */}
@@ -103,7 +103,7 @@ export default function Login() {
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #1e3a6e, #2563eb)' }}/>
  
             {/* Tabs */}
-            <div style={{ display: 'flex', background: '#f0f2f6', borderRadius: 10, padding: 4, marginBottom: 24, gap: 2 }}>
+            <div style={{ display: 'flex', justifyContent: 'center', background: '#f0f2f6', borderRadius: 10, padding: 4, marginBottom: 24, gap: 2 }}>
               <button className={`alma-tab${tab === 'login' ? ' active' : ''}`} onClick={() => { setTab('login'); setError(''); setResetMode(false); }}>Se connecter</button>
               <button className={`alma-tab${tab === 'register' ? ' active' : ''}`} onClick={() => { setTab('register'); setError(''); setResetMode(false); }}>Créer un compte</button>
             </div>
@@ -122,7 +122,9 @@ export default function Login() {
                 <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   <div><label style={lbl}>Email</label><input className="alma-input" style={inp} type="email" placeholder="votre@email.fr" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required/></div>
                   <div><label style={lbl}>Mot de passe</label><input className="alma-input" style={inp} type="password" placeholder="••••••••" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required/></div>
-                  <button className="alma-btn" type="submit" disabled={loading} style={btn}>{loading ? 'Connexion...' : <span style={{display:'flex',alignItems:'center',gap:8}}>Accéder à mon espace <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}</button>
+                  <button className="alma-btn" type="submit" disabled={loading} style={btn}>
+                    {loading ? 'Connexion...' : <span style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>Accéder à mon espace <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}
+                  </button>
                 </form>
                 <div style={{ marginTop: 16, textAlign: 'center' }}>
                   <button className="alma-forgot" onClick={() => { setResetMode(true); setError(''); }} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: 12, fontWeight: 500, fontFamily: 'inherit', transition: 'color 0.12s' }}>Mot de passe oublié ?</button>
@@ -173,7 +175,9 @@ export default function Login() {
                   <div><label style={lbl}>Email professionnel</label><input className="alma-input" style={inp} type="email" placeholder="votre@email.fr" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required/></div>
                   <div><label style={lbl}>Nom de votre entreprise</label><input className="alma-input" style={inp} type="text" placeholder="Ma Société SAS" value={form.entreprise} onChange={e => setForm({...form, entreprise: e.target.value})} required/></div>
                   <div><label style={lbl}>Mot de passe</label><input className="alma-input" style={inp} type="password" placeholder="8 caractères minimum" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required minLength={8}/></div>
-                  <button className="alma-btn" type="submit" disabled={loading} style={btn}>{loading ? 'Création...' : <span style={{display:'flex',alignItems:'center',gap:8}}>Démarrer mon essai gratuit <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}</button>
+                  <button className="alma-btn" type="submit" disabled={loading} style={btn}>
+                    {loading ? 'Création...' : <span style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>Démarrer mon essai gratuit <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>}
+                  </button>
                 </form>
                 <p style={{ fontSize: 11, color: '#94a3b8', textAlign: 'center', marginTop: 14, lineHeight: 1.6 }}>
                   En créant un compte, vous acceptez nos <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>CGU</a> et notre <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>politique de confidentialité</a>.
@@ -201,4 +205,3 @@ export default function Login() {
 const lbl = { display: 'block', fontSize: 11, fontWeight: 600, color: '#94a3b8', marginBottom: 6, letterSpacing: '0.5px', textTransform: 'uppercase' }
 const inp = { width: '100%', padding: '12px 14px', background: '#f7f8fa', border: '1px solid rgba(0,0,0,0.09)', borderRadius: 8, color: '#0f1729', fontSize: 14, transition: 'border-color 0.15s, box-shadow 0.15s', fontFamily: 'inherit', outline: 'none' }
 const btn = { width: '100%', padding: '13px 0', textAlign: 'center', background: '#1e3a6e', border: 'none', borderRadius: 9, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4, boxShadow: '0 2px 8px rgba(30,58,110,0.25)', transition: 'all 0.15s', fontFamily: 'inherit' }
- 
