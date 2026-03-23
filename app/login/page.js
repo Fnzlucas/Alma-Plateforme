@@ -103,7 +103,7 @@ export default function Login() {
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #1e3a6e, #2563eb)' }}/>
  
             {/* Tabs */}
-            <div style={{ display: 'flex', background: '#f0f2f6', borderRadius: 10, padding: 4, marginBottom: 24, gap: 4 }}>
+            <div style={{ display: 'flex', background: '#f0f2f6', borderRadius: 10, padding: 4, marginBottom: 24, gap: 2 }}>
               <button className={`alma-tab${tab === 'login' ? ' active' : ''}`} onClick={() => { setTab('login'); setError(''); setResetMode(false); }}>Se connecter</button>
               <button className={`alma-tab${tab === 'register' ? ' active' : ''}`} onClick={() => { setTab('register'); setError(''); setResetMode(false); }}>Créer un compte</button>
             </div>
