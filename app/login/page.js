@@ -84,7 +84,7 @@ export default function Login() {
       <div style={{ minHeight: '100vh', background: '#f7f8fa', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 20px 40px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 80% 60% at 15% 30%, rgba(30,58,110,0.04) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 85% 60%, rgba(37,99,235,0.04) 0%, transparent 55%)' }}/>
  
-        <div style={{ width: '100%', maxWidth: 460, position: 'relative', zIndex: 1 }}>
+        <div style={{ width: '100%', maxWidth: 460, margin: '0 auto', position: 'relative', zIndex: 1 }}>
  
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
