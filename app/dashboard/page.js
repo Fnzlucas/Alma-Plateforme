@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import FoodDashboard from './food/FoodDashboard'
 import GenericDashboard from './generic/GenericDashboard'
  
-const JEAN_PHILIPPE_EMAIL = 'jeanphilippe@gmail.com'
+const JEAN_PHILIPPE_EMAIL = 'jeanphilippeprofeti@gmail.com'
  
 export default async function DashboardPage({ searchParams }) {
   const supabase = createServerSupabase()
