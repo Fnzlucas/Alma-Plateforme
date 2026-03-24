@@ -1412,7 +1412,7 @@ function initGenericDashboard() {
 
 
   // Masquer les nav items qui ne sont pas dans les modules choisis
-  const allModuleIds = ['crm','stocks','facturation','equipe','calendrier','rapports','km','amortissement','finances'];
+  const allModuleIds = ['crm','stocks','facturation','devis','equipe','calendrier','rapports','km','amortissement','finances'];
   allModuleIds.forEach(id => {
     if (!modules.includes(id)) {
       // Cacher les nav items correspondants
@@ -1420,6 +1420,7 @@ function initGenericDashboard() {
         crm: '[data-page="sf-crm"],[data-page="cm-crm"]',
         stocks: '[data-page="sf-boissons"],[data-page="sf-consommables"],[data-page="sf-alimentaire"],[data-page="cm-consommables"],[data-page="cm-alimentaire"]',
         facturation: '[data-page="sf-factures"],[data-page="cm-factures"]',
+        devis: '[data-page="sf-devis"],[data-page="cm-devis"]',
         equipe: '[data-page="sf-employes"],[data-page="cm-employes"]',
         calendrier: '[data-page="cm-calendrier"]',
         rapports: '[data-page="sf-stats"],[data-page="cm-stats"]',
