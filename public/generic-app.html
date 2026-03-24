@@ -832,6 +832,8 @@ body{background:var(--bg);color:var(--text1)}
               <div><label class="modal-label">Téléphone</label><input class="modal-input" type="tel" id="ent-tel" placeholder="06 00 00 00 00"/></div>
               <div style="grid-column:1/-1"><label class="modal-label">Adresse</label><input class="modal-input" type="text" id="ent-adresse" placeholder="12 rue de la Paix, 75001 Paris"/></div>
               <div style="grid-column:1/-1"><label class="modal-label">Email de facturation</label><input class="modal-input" type="email" id="ent-email" placeholder="contact@monentreprise.fr"/></div>
+              <div><label class="modal-label">Numéro de TVA intracommunautaire</label><input class="modal-input" type="text" id="ent-tva" placeholder="FR12345678901 — laisser vide si micro-entreprise"/></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)"><input type="checkbox" id="ent-micro" style="width:16px;height:16px;accent-color:var(--primary)"/><label for="ent-micro" style="font-size:12px;color:var(--text2);cursor:pointer">Je suis micro-entrepreneur — TVA non applicable (art. 293B du CGI)</label></div>
             </div>
             <div style="margin-bottom:18px">
               <label class="modal-label">Logo (optionnel)</label>
@@ -1507,10 +1509,12 @@ function renderEntreprise(){
   if(info.tel)document.getElementById('ent-tel').value=info.tel;
   if(info.adresse)document.getElementById('ent-adresse').value=info.adresse;
   if(info.email)document.getElementById('ent-email').value=info.email;
+  if(info.tva)document.getElementById('ent-tva').value=info.tva;
+  if(info.micro)document.getElementById('ent-micro').checked=true;
   if(info.logo){document.getElementById('logo-preview').src=info.logo;document.getElementById('logo-preview-wrap').style.display='block';document.getElementById('logo-placeholder').style.display='none';}
 }
 function saveEntreprise(){
-  const info={nom:document.getElementById('ent-nom').value.trim(),siret:document.getElementById('ent-siret').value.trim(),tel:document.getElementById('ent-tel').value.trim(),adresse:document.getElementById('ent-adresse').value.trim(),email:document.getElementById('ent-email').value.trim(),logo:document.getElementById('logo-preview').src||''};
+  const info={nom:document.getElementById('ent-nom').value.trim(),siret:document.getElementById('ent-siret').value.trim(),tel:document.getElementById('ent-tel').value.trim(),adresse:document.getElementById('ent-adresse').value.trim(),email:document.getElementById('ent-email').value.trim(),logo:document.getElementById('logo-preview').src||'',tva:document.getElementById('ent-tva').value.trim(),micro:document.getElementById('ent-micro').checked};
   localStorage.setItem('entreprise_info',JSON.stringify(info));
   dbSet('entreprise_info',info);
   const b=document.getElementById('ent-saved-ok');if(b){b.style.display='block';setTimeout(()=>b.style.display='none',3000);}
@@ -2868,6 +2872,7 @@ function previewFacture(w){
       <div style="color:#555">${ent.adresse||''}</div>
       <div style="color:#555">${ent.tel||''}</div>
       <div style="color:#555">SIREN : ${ent.siret||''}</div>
+      ${ent.tva?'<div style="color:#555">N° TVA : '+ent.tva+'</div>':''}
     </div>
     <div style="padding:12px;background:#f9f9f9;border-radius:6px">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:6px">Destinataire</div>
@@ -2884,14 +2889,14 @@ function previewFacture(w){
   </table>
   <div class="total-box">
     <div class="total-row"><span>Total HT</span><span>${fEurFac(ht)}</span></div>
-    <div class="total-row"><span>TVA ${tvaRate}%</span><span>${fEurFac(tvaMt)}</span></div>
-    <div class="total-row total-final"><span>Total TTC</span><span>${fEurFac(ttc)}</span></div>
+    ${ent.micro||!ent.tva?'<div style="font-size:11px;color:#888;text-align:right;margin:4px 0">TVA non applicable, art. 293B du CGI</div>':'<div class="total-row"><span>TVA '+tvaRate+'%</span><span>'+fEurFac(tvaMt)+'</span></div>'}
+    <div class="total-row total-final"><span>Total TTC</span><span>${fEurFac(ent.micro||!ent.tva?ht:ttc)}</span></div>
   </div>
   <div class="mentions">
+    ${ent.micro||!ent.tva?'<strong>TVA non applicable, art. 293B du CGI</strong><br>':''}
     Pénalités de retard : taux BCE majoré de 10 points — exigibles le lendemain de la date d'échéance (art. L.441-10 C. commerce).<br>
     Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5 C. commerce).<br>
-    En cas de litige, Tribunal compétent du ressort du siège social.<br>
-    <strong>Pour la facturation électronique conforme (obligatoire 2026) : déposez cette facture sur <a href="https://chorus-pro.gouv.fr/cpp/connexion" target="_blank">chorus-pro.gouv.fr</a></strong>
+    En cas de litige, Tribunal compétent du ressort du siège social.
   </div>
   </body></html>`);
   win.document.close();
