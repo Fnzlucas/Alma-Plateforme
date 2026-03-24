@@ -602,7 +602,7 @@ body{background:var(--bg);color:var(--text1)}
       <div class="page" id="page-sf-factures">
         <div style="display:grid;grid-template-columns:290px 1fr;gap:14px;height:calc(100vh - 130px)">
           <div>
-            <div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn btn-accent" style="flex:1;font-size:12px" onclick="newFacture('sf')">+ Nouvelle facture</button></div>
+            <div id="sf-factures-wrap"><div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn btn-accent" style="flex:1;font-size:12px" onclick="newFacture('sf')">+ Nouvelle facture</button></div>
             <div id="sf-fac-list"><div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">Aucune facture</div></div>
           </div>
           <div style="position:relative">
@@ -1497,6 +1497,22 @@ function exportFEC(){
   downloadCSV('FEC_'+ent.siret+'_'+end.replace(/-/g,'')+'.txt',rows);
 }
 
+
+function checkEntrepriseAlert(containerId) {
+  const ent = getEntrepriseInfo();
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const existing = container.querySelector('.ent-alert-banner');
+  if (existing) existing.remove();
+  if (!ent.nom || !ent.siret) {
+    const banner = document.createElement('div');
+    banner.className = 'ent-alert-banner';
+    banner.style.cssText = 'background:#fef9c3;border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#92400e;display:flex;align-items:center;gap:10px;cursor:pointer';
+    banner.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 10.5v.5"/></svg> Renseignez vos informations entreprise pour les voir apparaître automatiquement sur vos documents. <strong style="text-decoration:underline">Cliquez ici</strong>';
+    banner.onclick = () => goPage('sf-entreprise', document.querySelector('[data-page="sf-entreprise"]'));
+    container.insertBefore(banner, container.firstChild);
+  }
+}
 function getEntrepriseInfo(){try{return JSON.parse(localStorage.getItem('entreprise_info')||'{}');}catch(e){return {};}}
 function renderEntreprise(){
   // Try to load from __INIT_DATA__ first (Supabase), then localStorage
@@ -2423,6 +2439,7 @@ let curDoc={w:null,idx:null};
 function saveDocs(w){try{localStorage.setItem('docs_'+w,JSON.stringify(docs[w]));dbSet('docs_'+w,docs[w]);}catch(e){}}
 
 function renderDocs(w){
+  checkEntrepriseAlert(w+'-docs-wrap');
   const list=document.getElementById(w+'-doc-list');
   list.innerHTML=docs[w].length?docs[w].map((d,i)=>{
     const badge=d.type==='contrat'?'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(100,200,255,.12);color:#64c8ff;font-weight:700">Contrat</span>':'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(255,180,80,.12);color:var(--warn);font-weight:700">Devis</span>';
@@ -2690,6 +2707,7 @@ PAGE_META['cm-factures'] = {icon:'', title:'FACTURATION', sub:'Devis et contrats
 const _origGoPage = goPage;
 
 function renderFacList(w){
+  checkEntrepriseAlert(w+'-factures-wrap');
   const list = document.getElementById(w+'-fac-list');
   if(!list) return;
   const facs = factures[w]||[];
