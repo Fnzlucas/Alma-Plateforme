@@ -640,7 +640,7 @@ body{background:var(--bg);color:var(--text1)}
                 <div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Total TTC</div><div style="font-family:monospace;font-weight:800;font-size:20px;color:var(--ok)" id="sf-fac-ttc">0,00 €</div></div>
               </div>
               <div style="padding:8px 14px;background:rgba(34,197,94,.06);border-top:1px solid rgba(34,197,94,.15);font-size:11px;color:var(--ok);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                <span>SIREN 907 560 676 · Jean-Philippe Profeti</span>
+                <span class="fac-emetteur-info"></span>
                 <span>N° TVA : <input id="sf-tva-emetteur" type="text" value="FR__907560676" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:4px;padding:2px 7px;color:var(--ok);font-size:11px;outline:none;width:140px"/></span>
               </div>
             </div>
@@ -1209,7 +1209,7 @@ body{background:var(--bg);color:var(--text1)}
                 <div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Total TTC</div><div style="font-family:monospace;font-weight:800;font-size:20px;color:var(--ok)" id="cm-fac-ttc">0,00 €</div></div>
               </div>
               <div style="padding:8px 14px;background:rgba(34,197,94,.06);border-top:1px solid rgba(34,197,94,.15);font-size:11px;color:var(--ok);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                <span>SIREN 907 560 676 · Jean-Philippe Profeti</span>
+                <span class="fac-emetteur-info"></span>
                 <span>N° TVA : <input id="cm-tva-emetteur" type="text" value="FR__907560676" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:4px;padding:2px 7px;color:var(--ok);font-size:11px;outline:none;width:140px"/></span>
               </div>
             </div>
@@ -1404,6 +1404,12 @@ function initGenericDashboard() {
   const logoEl = document.getElementById('logo-title');
   if (logoEl) logoEl.textContent = business;
   document.title = business + ' — Alma.co';
+
+  // Remplir les infos emetteur dans les factures
+  const entInfo = getEntrepriseInfo();
+  const emetteurText = (entInfo.siret ? 'SIREN ' + entInfo.siret + ' · ' : '') + (entInfo.nom || '');
+  document.querySelectorAll('.fac-emetteur-info').forEach(el => el.textContent = emetteurText);
+
 
   // Masquer les nav items qui ne sont pas dans les modules choisis
   const allModuleIds = ['crm','stocks','facturation','equipe','calendrier','rapports','km','amortissement','finances'];
@@ -2355,6 +2361,12 @@ function renderDocs(w){
 }
 
 function newDoc(w,type){
+  const ent=getEntrepriseInfo();
+  // Pre-fill emetteur info
+  setTimeout(()=>{
+    const el=document.getElementById('sf-fac-emetteur-info')||document.getElementById('cm-fac-emetteur-info');
+    if(el) el.textContent=(ent.siret?'SIREN '+ent.siret+' · ':'')+( ent.nom||'');
+  },100);
   const today=new Date().toLocaleDateString('fr-FR');
   const n=String(docs[w].length+1).padStart(4,'0');
   curDoc={w,idx:null,type,title:type==='contrat'?'Nouveau contrat':'Nouveau devis',montant:'',date:new Date().toISOString(),content:getTemplate(type,n,today),sig:null};
@@ -2393,13 +2405,13 @@ function previewDoc(w){
   }
   const today=new Date().toLocaleDateString('fr-FR');
   const accentCol=w==='sf'?'#FF6B2B':'#d4688a';
-  const bizName=w==='sf'?'Street Food':'Croquez Moi';
+  const ent=getEntrepriseInfo();const bizName=ent.nom||'Mon Entreprise';
   document.getElementById('doc-prev-title').textContent=curDoc.title||'Document';
   document.getElementById('doc-prev-content').innerHTML=`
     <div style="display:flex;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:3px solid ${accentCol}">
       <div>
         <div style="font-size:22px;font-weight:800;color:${accentCol};letter-spacing:1px">${bizName}</div>
-        <div style="font-size:11px;color:#666;margin-top:2px">Jean-Philippe Profeti · SIREN 907 560 676</div>
+        <div style="font-size:11px;color:#666;margin-top:2px" class="fac-emetteur-info"></div>
       </div>
       <div style="text-align:right">
         <div style="font-size:17px;font-weight:700;color:#111">${curDoc.title}</div>
@@ -2429,8 +2441,8 @@ function insDoc(w,t){
 }
 
 function getTemplate(type,n,today){
-  if(type==='contrat') return `<h2 style="margin-bottom:4px">CONTRAT DE PRESTATION DE SERVICES</h2><p style="font-size:11px;color:#777;margin-bottom:16px">Réf : CTR-${n} · ${today}</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Prestataire</p><p><strong>Jean-Philippe Profeti</strong><br>SIREN : 907 560 676<br>Nîmes (30)</p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Client</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><h3 style="margin:14px 0 7px">Article 1 — Objet du contrat</h3><p>[Décrivez la prestation en détail]</p><h3 style="margin:14px 0 7px">Article 2 — Durée</h3><p>Le présent contrat prend effet à compter de la date de signature pour une durée de [DURÉE].</p><h3 style="margin:14px 0 7px">Article 3 — Prix et modalités de paiement</h3><p>Montant total : <strong>[MONTANT] €</strong><br>Conditions : [MODALITÉS]<br>Pénalités de retard au taux légal en vigueur (art. L.441-10 du Code de commerce). Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5).</p><h3 style="margin:14px 0 7px">Article 4 — Propriété intellectuelle</h3><p>Tous droits réservés au Prestataire jusqu'au règlement complet de la prestation.</p><h3 style="margin:14px 0 7px">Article 5 — Confidentialité</h3><p>Les parties s'engagent à la confidentialité des informations échangées pendant 3 ans.</p><h3 style="margin:14px 0 7px">Article 6 — Protection des données (RGPD)</h3><p>Les données personnelles sont traitées conformément au Règlement (UE) 2016/679.</p><h3 style="margin:14px 0 7px">Article 7 — Résiliation</h3><p>Chaque partie peut résilier avec un préavis de 30 jours par lettre recommandée.</p><h3 style="margin:14px 0 7px">Article 8 — Droit applicable et juridiction</h3><p>Le présent contrat est soumis au droit français. En cas de litige, le Tribunal compétent de Nîmes sera saisi.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">Jean-Philippe Profeti · ${today}</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Client — Lu et approuvé, bon pour accord</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:18px;padding-top:12px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · SIREN 907 560 676 · Jean-Philippe Profeti</p>`;
-  return `<h2 style="margin-bottom:4px">DEVIS</h2><p style="font-size:11px;color:#777;margin-bottom:16px">N° DEV-${n} · ${today} · Valable 30 jours</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Émetteur</p><p><strong>Jean-Philippe Profeti</strong><br>SIREN : 907 560 676<br>Nîmes (30)</p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Destinataire</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><table style="width:100%;border-collapse:collapse;margin:14px 0"><tr style="background:#f7f7f7"><th style="padding:9px 11px;text-align:left;border:1px solid #ddd;font-size:11px;letter-spacing:1px">DÉSIGNATION</th><th style="padding:9px 11px;text-align:center;border:1px solid #ddd;font-size:11px;letter-spacing:1px">QTÉ</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">P.U. €</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">TOTAL €</th></tr><tr><td style="padding:9px 11px;border:1px solid #ddd">[Désignation de la prestation]</td><td style="padding:9px 11px;text-align:center;border:1px solid #ddd">1</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td></tr><tr style="font-weight:700;background:#f7f7f7"><td colspan="3" style="padding:9px 11px;border:1px solid #ddd;text-align:right">TOTAL TTC — TVA non applicable</td><td style="padding:9px 11px;border:1px solid #ddd;text-align:right">[MONTANT] €</td></tr></table><p style="font-size:11px;color:#777;margin:10px 0">Pénalités de retard : taux BCE majoré de 10 points. Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5 C. commerce).</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Bon pour accord — Le Client</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">Jean-Philippe Profeti · ${today}</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:16px;padding-top:10px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · SIREN 907 560 676 · Jean-Philippe Profeti</p>`;
+  if(type==='contrat') return `<h2 style="margin-bottom:4px">CONTRAT DE PRESTATION DE SERVICES</h2><p style="font-size:11px;color:#777;margin-bottom:16px">Réf : CTR-${n} · ${today}</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Prestataire</p><p><strong>${ent.nom||'[Votre entreprise]'}</strong><br>SIREN : ${ent.siret||'[Votre SIRET]'}<br>${ent.adresse||'[Votre adresse]'}</p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Client</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><h3 style="margin:14px 0 7px">Article 1 — Objet du contrat</h3><p>[Décrivez la prestation en détail]</p><h3 style="margin:14px 0 7px">Article 2 — Durée</h3><p>Le présent contrat prend effet à compter de la date de signature pour une durée de [DURÉE].</p><h3 style="margin:14px 0 7px">Article 3 — Prix et modalités de paiement</h3><p>Montant total : <strong>[MONTANT] €</strong><br>Conditions : [MODALITÉS]<br>Pénalités de retard au taux légal en vigueur (art. L.441-10 du Code de commerce). Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5).</p><h3 style="margin:14px 0 7px">Article 4 — Propriété intellectuelle</h3><p>Tous droits réservés au Prestataire jusqu'au règlement complet de la prestation.</p><h3 style="margin:14px 0 7px">Article 5 — Confidentialité</h3><p>Les parties s'engagent à la confidentialité des informations échangées pendant 3 ans.</p><h3 style="margin:14px 0 7px">Article 6 — Protection des données (RGPD)</h3><p>Les données personnelles sont traitées conformément au Règlement (UE) 2016/679.</p><h3 style="margin:14px 0 7px">Article 7 — Résiliation</h3><p>Chaque partie peut résilier avec un préavis de 30 jours par lettre recommandée.</p><h3 style="margin:14px 0 7px">Article 8 — Droit applicable et juridiction</h3><p>Le présent contrat est soumis au droit français. En cas de litige, le Tribunal compétent de Nîmes sera saisi.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">${ent.nom||'Le Prestataire'} · ${today}</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Client — Lu et approuvé, bon pour accord</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:18px;padding-top:12px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · ${ent.siret||''} · ${ent.nom||''}</p>`;
+  return `<h2 style="margin-bottom:4px">DEVIS</h2><p style="font-size:11px;color:#777;margin-bottom:16px">N° DEV-${n} · ${today} · Valable 30 jours</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Émetteur</p><p><strong>${ent.nom||'[Votre entreprise]'}</strong><br>SIREN : ${ent.siret||'[Votre SIRET]'}<br>${ent.adresse||'[Votre adresse]'}</p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Destinataire</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><table style="width:100%;border-collapse:collapse;margin:14px 0"><tr style="background:#f7f7f7"><th style="padding:9px 11px;text-align:left;border:1px solid #ddd;font-size:11px;letter-spacing:1px">DÉSIGNATION</th><th style="padding:9px 11px;text-align:center;border:1px solid #ddd;font-size:11px;letter-spacing:1px">QTÉ</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">P.U. €</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">TOTAL €</th></tr><tr><td style="padding:9px 11px;border:1px solid #ddd">[Désignation de la prestation]</td><td style="padding:9px 11px;text-align:center;border:1px solid #ddd">1</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td></tr><tr style="font-weight:700;background:#f7f7f7"><td colspan="3" style="padding:9px 11px;border:1px solid #ddd;text-align:right">TOTAL TTC — TVA non applicable</td><td style="padding:9px 11px;border:1px solid #ddd;text-align:right">[MONTANT] €</td></tr></table><p style="font-size:11px;color:#777;margin:10px 0">Pénalités de retard : taux BCE majoré de 10 points. Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5 C. commerce).</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Bon pour accord — Le Client</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">${ent.nom||'Le Prestataire'} · ${today}</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:16px;padding-top:10px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · ${ent.siret||''} · ${ent.nom||''}</p>`;
 }
 
 // ═══════ SIGNATURE ═══════
@@ -2747,7 +2759,7 @@ function previewFacture(w){
   const client = document.getElementById(w+'-fac-client').value||'[Client]';
   const siret = document.getElementById(w+'-fac-siret').value||'[SIRET]';
   const accentCol = w==='sf'?'#FF6B2B':'#d4688a';
-  const bizName = w==='sf'?'Street Food':'Croquez Moi';
+  const ent2=getEntrepriseInfo();const bizName=ent2.nom||'Mon Entreprise';
 
   const win = window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Facture ${num}</title>
@@ -2769,7 +2781,7 @@ function previewFacture(w){
   <div class="header">
     <div>
       <div style="font-size:22px;font-weight:800;color:${accentCol}">${bizName}</div>
-      <div style="font-size:11px;color:#666;margin-top:4px">Jean-Philippe Profeti · SIREN : 907 560 676</div>
+      <div style="font-size:11px;color:#666;margin-top:4px" id="fac-preview-siret"></div>
       <div style="font-size:11px;color:#666">N° TVA : ${document.getElementById(w+'-tva-emetteur')?.value||'FR__907560676'}</div>
     </div>
     <div style="text-align:right">
@@ -2782,8 +2794,8 @@ function previewFacture(w){
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
     <div style="padding:12px;background:#f9f9f9;border-radius:6px">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:6px">Émetteur</div>
-      <div><strong>Jean-Philippe Profeti</strong></div>
-      <div style="color:#555">SIREN : 907 560 676</div>
+      <div id="fac-preview-nom"><strong></strong></div>
+      <div style="color:#555" id="fac-preview-siret2"></div>
       <div style="color:#555">N° TVA intracommunautaire : ${document.getElementById(w+'-tva-emetteur')?.value||'FR__907560676'}</div>
     </div>
     <div style="padding:12px;background:#f9f9f9;border-radius:6px">
