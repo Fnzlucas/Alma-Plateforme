@@ -299,6 +299,7 @@ body{background:var(--bg);color:var(--text1)}
     <div class="nav-item" data-page="sf-employes" onclick="goPage('sf-employes',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">badge</span>Coûts Employés</div>
     <div class="nav-item" data-page="sf-factures" onclick="goPage('sf-factures',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">receipt</span>Facturation</div>
     <div class="nav-item" id="nav-caisse" data-page="sf-caisse" onclick="goPage('sf-caisse',this)" style="display:none"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">point_of_sale</span>Caisse</div>
+    <div class="nav-item" data-page="sf-export" onclick="goPage('sf-export',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">download</span>Export Comptable</div>
     <div class="nav-item" data-page="sf-entreprise" onclick="goPage('sf-entreprise',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">business</span>Mon Entreprise</div>
     <div class="nav-item" id="nav-devis" data-page="sf-devis" onclick="goPage('sf-devis',this)" style="display:none"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">description</span>Devis &amp; Contrats</div>
     <div class="nav-item" data-page="sf-historique" onclick="goPage('sf-historique',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">history</span>Historique</div>
@@ -719,6 +720,100 @@ body{background:var(--bg);color:var(--text1)}
             <div class="modal-actions">
               <button class="btn btn-ghost" onclick="document.getElementById('sf-crm-modal').classList.remove('open')">Annuler</button>
               <button class="btn btn-accent" onclick="sfCrmSave()">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- PAGE EXPORT COMPTABLE -->
+      <div class="page" id="page-sf-export">
+        <div style="max-width:700px;margin:0 auto">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;position:relative;overflow:hidden;margin-bottom:16px">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--secondary))"></div>
+            <h2 style="font-family:'Manrope',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px">Export Comptable</h2>
+            <p style="font-size:12px;color:var(--text3);margin-bottom:20px">Exportez toutes vos données pour les transmettre à votre comptable.</p>
+            
+            <!-- Période -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;align-items:end">
+              <div>
+                <label class="modal-label">Période — Du</label>
+                <input class="modal-input" type="date" id="export-date-start"/>
+              </div>
+              <div>
+                <label class="modal-label">Au</label>
+                <input class="modal-input" type="date" id="export-date-end"/>
+              </div>
+              <div>
+                <button class="btn btn-ghost" onclick="setExportPeriod('month')" style="width:100%;font-size:12px">Ce mois</button>
+              </div>
+            </div>
+
+            <!-- Boutons export -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Factures</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">Toutes vos factures sur la période</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="exportFacturesCSV()" style="flex:1;font-size:11px">CSV</button>
+                  <button class="btn btn-accent btn-sm" onclick="exportFacturesPDF()" style="flex:1;font-size:11px">PDF</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Encaissements</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">CA et encaissements saisis</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="exportEncaissementsCSV()" style="flex:1;font-size:11px">CSV</button>
+                  <button class="btn btn-accent btn-sm" onclick="exportEncaissementsXLS()" style="flex:1;font-size:11px">Excel</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Frais &amp; Charges</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">Employés, kilométrique, amortissements</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="exportChargesCSV()" style="flex:1;font-size:11px">CSV</button>
+                  <button class="btn btn-accent btn-sm" onclick="exportChargesXLS()" style="flex:1;font-size:11px">Excel</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Export Global</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">Tout en un seul fichier Excel</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-accent btn-sm" onclick="exportGlobalXLS()" style="width:100%;font-size:11px">Tout exporter</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Stocks &amp; Inventaire</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">État des stocks à date</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="exportStocksCSV()" style="flex:1;font-size:11px">CSV</button>
+                  <button class="btn btn-accent btn-sm" onclick="exportStocksXLS()" style="flex:1;font-size:11px">Excel</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px">Fichier FEC</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">Format officiel pour l'administration</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-accent btn-sm" onclick="exportFEC()" style="width:100%;font-size:11px">Générer FEC</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Résumé période -->
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px" id="export-summary">
+            <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Résumé de la période</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="export-kpis">
+              <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:var(--text1)" id="exp-ca">—</div><div style="font-size:11px;color:var(--text3)">CA Total</div></div>
+              <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:var(--text1)" id="exp-nb-fac">—</div><div style="font-size:11px;color:var(--text3)">Factures</div></div>
+              <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:var(--text1)" id="exp-enc">—</div><div style="font-size:11px;color:var(--text3)">Encaissements</div></div>
             </div>
           </div>
         </div>
@@ -1275,6 +1370,132 @@ body{background:var(--bg);color:var(--text1)}
 // ============================================================
 // MON ENTREPRISE
 // ============================================================
+
+// ============================================================
+// EXPORT COMPTABLE
+// ============================================================
+function getExportDates(){
+  const s=document.getElementById('export-date-start')?.value;
+  const e=document.getElementById('export-date-end')?.value;
+  return {start:s||'2020-01-01',end:e||new Date().toISOString().split('T')[0]};
+}
+function setExportPeriod(p){
+  const now=new Date();
+  const s=document.getElementById('export-date-start');
+  const e=document.getElementById('export-date-end');
+  if(p==='month'){
+    s.value=new Date(now.getFullYear(),now.getMonth(),1).toISOString().split('T')[0];
+    e.value=new Date(now.getFullYear(),now.getMonth()+1,0).toISOString().split('T')[0];
+  }
+  renderExport();
+}
+function renderExport(){
+  const {start,end}=getExportDates();
+  const encs=loadEnc('sf');
+  const filtered=encs.filter(e=>e.date>=start&&e.date<=end);
+  const ca=filtered.reduce((s,e)=>s+(parseFloat(e.montant)||0),0);
+  const facs=factures['sf']||[];
+  const filteredFacs=facs.filter(f=>{const d=f.date||'';return d>=start&&d<=end;});
+  document.getElementById('exp-ca').textContent=fEur(ca);
+  document.getElementById('exp-nb-fac').textContent=filteredFacs.length;
+  document.getElementById('exp-enc').textContent=filtered.length+' lignes';
+}
+function downloadCSV(filename,rows){
+  const csv=rows.map(r=>r.map(c=>`"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download=filename;a.click();
+}
+function downloadXLS(filename,sheets){
+  // Simple CSV with multiple sheets indication
+  let csv='';
+  sheets.forEach(s=>{csv+='=== '+s.name+' ===\n';csv+=s.rows.map(r=>r.join(';')).join('\n');csv+='\n\n';});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download=filename.replace('.xlsx','.csv');a.click();
+}
+function exportFacturesCSV(){
+  const {start,end}=getExportDates();
+  const facs=(factures['sf']||[]).filter(f=>(f.date||'')>=start&&(f.date||'')<=end);
+  const rows=[['Numéro','Date','Client','Montant HT','Statut','Notes']];
+  facs.forEach(f=>rows.push([f.num||'',f.date||'',f.client||'',f.montant||'0',f.statut||'',f.notes||'']));
+  downloadCSV('factures_'+start+'_'+end+'.csv',rows);
+}
+function exportFacturesPDF(){
+  const {start,end}=getExportDates();
+  const facs=(factures['sf']||[]).filter(f=>(f.date||'')>=start&&(f.date||'')<=end);
+  const ent=getEntrepriseInfo();
+  const w=window.open('','_blank');
+  w.document.write('<html><head><title>Factures '+start+' - '+end+'</title><style>body{font-family:Arial,sans-serif;padding:30px;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#f0f0f0;padding:8px;text-align:left;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}h1{font-size:18px}</style></head><body>');
+  w.document.write('<h1>Factures — '+ent.nom+'</h1><p>Période : '+start+' au '+end+'</p>');
+  w.document.write('<table><tr><th>N°</th><th>Date</th><th>Client</th><th>Montant</th><th>Statut</th></tr>');
+  facs.forEach(f=>w.document.write('<tr><td>'+f.num+'</td><td>'+f.date+'</td><td>'+f.client+'</td><td>'+fEur(f.montant)+'</td><td>'+f.statut+'</td></tr>'));
+  const total=facs.reduce((s,f)=>s+(parseFloat(f.montant)||0),0);
+  w.document.write('<tr style="font-weight:bold"><td colspan="3">TOTAL</td><td>'+fEur(total)+'</td><td></td></tr>');
+  w.document.write('</table></body></html>');
+  w.document.close();setTimeout(()=>w.print(),500);
+}
+function exportEncaissementsCSV(){
+  const {start,end}=getExportDates();
+  const encs=loadEnc('sf').filter(e=>e.date>=start&&e.date<=end);
+  const rows=[['Date','Montant','Mode','Description']];
+  encs.forEach(e=>rows.push([e.date||'',e.montant||'0',e.mode||'',e.desc||'']));
+  downloadCSV('encaissements_'+start+'_'+end+'.csv',rows);
+}
+function exportEncaissementsXLS(){
+  const {start,end}=getExportDates();
+  const encs=loadEnc('sf').filter(e=>e.date>=start&&e.date<=end);
+  const rows=[['Date','Montant','Mode','Description']];
+  encs.forEach(e=>rows.push([e.date||'',e.montant||'0',e.mode||'',e.desc||'']));
+  downloadXLS('encaissements_'+start+'_'+end+'.xlsx',[{name:'Encaissements',rows}]);
+}
+function exportChargesCSV(){
+  const {start,end}=getExportDates();
+  const rows=[['Type','Date','Description','Montant']];
+  // Employés
+  (employes['sf']||[]).forEach(e=>rows.push(['Employé','',e.nom||'',e.salaire||'0']));
+  // KM
+  KM_HIST.filter(k=>k.date>=start&&k.date<=end).forEach(k=>rows.push(['Kilométrique',k.date||'',k.desc||'',k.cout||'0']));
+  // Amortissements
+  AMORT.forEach(a=>rows.push(['Amortissement','',a.nom||'',a.cout||'0']));
+  downloadCSV('charges_'+start+'_'+end+'.csv',rows);
+}
+function exportChargesXLS(){exportChargesCSV();}
+function exportStocksCSV(){
+  const rows=[['Nom','Catégorie','Stock','Unité','Statut']];
+  SF.products.forEach(p=>rows.push([p.nom,p.cat,p.stock,p.unit,getStatus(p)]));
+  downloadCSV('stocks_'+new Date().toISOString().split('T')[0]+'.csv',rows);
+}
+function exportStocksXLS(){exportStocksCSV();}
+function exportGlobalXLS(){
+  const {start,end}=getExportDates();
+  const ent=getEntrepriseInfo();
+  const facs=(factures['sf']||[]).filter(f=>(f.date||'')>=start&&(f.date||'')<=end);
+  const encs=loadEnc('sf').filter(e=>e.date>=start&&e.date<=end);
+  const sheets=[
+    {name:'Factures',rows:[['N°','Date','Client','Montant','Statut'],...facs.map(f=>[f.num,f.date,f.client,f.montant,f.statut])]},
+    {name:'Encaissements',rows:[['Date','Montant','Mode','Description'],...encs.map(e=>[e.date,e.montant,e.mode,e.desc])]},
+    {name:'Stocks',rows:[['Nom','Catégorie','Stock','Unité','Statut'],...SF.products.map(p=>[p.nom,p.cat,p.stock,p.unit,getStatus(p)])]},
+    {name:'Employés',rows:[['Nom','Salaire'],...(employes['sf']||[]).map(e=>[e.nom,e.salaire])]},
+  ];
+  downloadXLS('export_comptable_'+ent.nom+'_'+start+'_'+end+'.xlsx',sheets);
+}
+function exportFEC(){
+  const {start,end}=getExportDates();
+  const ent=getEntrepriseInfo();
+  const facs=(factures['sf']||[]).filter(f=>(f.date||'')>=start&&(f.date||'')<=end);
+  const rows=[['JournalCode','JournalLib','EcritureNum','EcritureDate','CompteNum','CompteLib','PieceRef','PieceDate','EcritureLib','Debit','Credit','EcritureLet','DateLet','ValidDate','Montantdevise','Idevise']];
+  let num=1;
+  facs.forEach(f=>{
+    const d=(f.date||'').replace(/-/g,'');
+    const n=String(num++).padStart(6,'0');
+    const mt=parseFloat(f.montant)||0;
+    rows.push(['VT','Ventes',n,d,'411000','Clients',f.num||n,d,f.client||'Client',mt.toFixed(2),'0','','','','','']);
+    rows.push(['VT','Ventes',n,d,'706000','Prestations de services',f.num||n,d,f.client||'Client','0',mt.toFixed(2),'','','','','']);
+  });
+  downloadCSV('FEC_'+ent.siret+'_'+end.replace(/-/g,'')+'.txt',rows);
+}
+
 function getEntrepriseInfo(){try{return JSON.parse(localStorage.getItem('entreprise_info')||'{}');}catch(e){return {};}}
 function renderEntreprise(){
   // Try to load from __INIT_DATA__ first (Supabase), then localStorage
@@ -1327,6 +1548,12 @@ function initGenericDashboard(){
   const logoEl=document.getElementById('logo-title');
   if(logoEl)logoEl.textContent=business;
   document.title=business+' — Alma.co';
+  // Init export dates
+  const now=new Date();
+  const expStart=document.getElementById('export-date-start');
+  const expEnd=document.getElementById('export-date-end');
+  if(expStart)expStart.value=new Date(now.getFullYear(),now.getMonth(),1).toISOString().split('T')[0];
+  if(expEnd)expEnd.value=new Date(now.getFullYear(),now.getMonth()+1,0).toISOString().split('T')[0];
 
   // Charger infos entreprise dans localStorage si dispo
   const entData=window.__INIT_DATA__&&window.__INIT_DATA__.entreprise_info;
@@ -1538,6 +1765,7 @@ const PAGE_META = {
   'cm-historique':{icon:'',title:'HISTORIQUE',sub:'Journal des modifications'},
   'cm-stats':{icon:'',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
     'sf-caisse':{icon:'point_of_sale',title:'CAISSE CONNECTÉE',sub:'Synchronisation automatique des ventes'},
+  'sf-export':{icon:'download',title:'EXPORT COMPTABLE',sub:'Exportez toutes vos données pour votre comptable'},
   'sf-entreprise':{icon:'business',title:'MON ENTREPRISE',sub:'Informations pour vos factures et devis'},
   'sf-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Gestion clients'},
   'cm-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Gestion clients'},
@@ -1584,6 +1812,7 @@ function goPage(pid,el,noSave){
   else if(pid.endsWith('historique')) renderHist(w);
   else if(pid==='sf-crm') sfCrmRender();
   else if(pid==='sf-entreprise') renderEntreprise();
+  else if(pid==='sf-export') renderExport();
   else if(pid==='sf-caisse') renderCaisse();
   else if(pid==='cm-crm') cmCrmRender();
 }
@@ -2279,7 +2508,8 @@ function insDoc(w,t){
   document.execCommand('insertHTML',false,m[t]);
 }
 
-function getTemplate(type,n,today){
+function getTemplate(type,n,today,ent){
+  if(!ent)ent=getEntrepriseInfo();
   if(type==='contrat') return `<h2 style="margin-bottom:4px">CONTRAT DE PRESTATION DE SERVICES</h2><p style="font-size:11px;color:#777;margin-bottom:16px">Réf : CTR-${n} · ${today}</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Prestataire</p><p><strong></strong><br>SIREN : <br></p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Le Client</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><h3 style="margin:14px 0 7px">Article 1 — Objet du contrat</h3><p>[Décrivez la prestation en détail]</p><h3 style="margin:14px 0 7px">Article 2 — Durée</h3><p>Le présent contrat prend effet à compter de la date de signature pour une durée de [DURÉE].</p><h3 style="margin:14px 0 7px">Article 3 — Prix et modalités de paiement</h3><p>Montant total : <strong>[MONTANT] €</strong><br>Conditions : [MODALITÉS]<br>Pénalités de retard au taux légal en vigueur (art. L.441-10 du Code de commerce). Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5).</p><h3 style="margin:14px 0 7px">Article 4 — Propriété intellectuelle</h3><p>Tous droits réservés au Prestataire jusqu'au règlement complet de la prestation.</p><h3 style="margin:14px 0 7px">Article 5 — Confidentialité</h3><p>Les parties s'engagent à la confidentialité des informations échangées pendant 3 ans.</p><h3 style="margin:14px 0 7px">Article 6 — Protection des données (RGPD)</h3><p>Les données personnelles sont traitées conformément au Règlement (UE) 2016/679.</p><h3 style="margin:14px 0 7px">Article 7 — Résiliation</h3><p>Chaque partie peut résilier avec un préavis de 30 jours par lettre recommandée.</p><h3 style="margin:14px 0 7px">Article 8 — Droit applicable et juridiction</h3><p>Le présent contrat est soumis au droit français. En cas de litige, le Tribunal compétent de Nîmes sera saisi.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777"> · ${today}</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Client — Lu et approuvé, bon pour accord</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:18px;padding-top:12px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · </p>`;
   return `<h2 style="margin-bottom:4px">DEVIS</h2><p style="font-size:11px;color:#777;margin-bottom:16px">N° DEV-${n} · ${today} · Valable 30 jours</p><hr style="border:none;border-top:1px solid #ccc;margin:14px 0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px"><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Émetteur</p><p><strong></strong><br>SIREN : <br></p></div><div><p style="font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Destinataire</p><p><strong>[Nom / Raison sociale]</strong><br>[Adresse complète]<br>SIREN : [Numéro]</p></div></div><table style="width:100%;border-collapse:collapse;margin:14px 0"><tr style="background:#f7f7f7"><th style="padding:9px 11px;text-align:left;border:1px solid #ddd;font-size:11px;letter-spacing:1px">DÉSIGNATION</th><th style="padding:9px 11px;text-align:center;border:1px solid #ddd;font-size:11px;letter-spacing:1px">QTÉ</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">P.U. €</th><th style="padding:9px 11px;text-align:right;border:1px solid #ddd;font-size:11px;letter-spacing:1px">TOTAL €</th></tr><tr><td style="padding:9px 11px;border:1px solid #ddd">[Désignation de la prestation]</td><td style="padding:9px 11px;text-align:center;border:1px solid #ddd">1</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td><td style="padding:9px 11px;text-align:right;border:1px solid #ddd">[PRIX]</td></tr><tr style="font-weight:700;background:#f7f7f7"><td colspan="3" style="padding:9px 11px;border:1px solid #ddd;text-align:right">TOTAL TTC — TVA non applicable</td><td style="padding:9px 11px;border:1px solid #ddd;text-align:right">[MONTANT] €</td></tr></table><p style="font-size:11px;color:#777;margin:10px 0">Pénalités de retard : taux BCE majoré de 10 points. Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5 C. commerce).</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;padding-top:18px;border-top:1px solid #ccc"><div><p style="font-size:11px;color:#777;margin-bottom:5px">Bon pour accord — Le Client</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777">[Nom] · [Date]</p></div><div><p style="font-size:11px;color:#777;margin-bottom:5px">Le Prestataire</p><div style="height:60px;border-bottom:1px solid #999;margin-bottom:6px"></div><p style="font-size:11px;color:#777"> · ${today}</p></div></div><p style="font-size:10px;color:#888;text-align:center;margin-top:16px;padding-top:10px;border-top:1px solid #eee">TVA non applicable, art. 293B du CGI · </p>`;
 }
