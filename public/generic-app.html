@@ -325,12 +325,12 @@ body{background:var(--bg);color:var(--text1)}
   </div>
 
   <div id="side-alerts-sf" class="alert-box" style="display:none;margin-top:8px">
-    <div class="alert-title">⚠ Alertes stock</div>
-    <div class="alert-list" id="side-alert-list-sf"><div class="no-alerts">✓ Tout est OK</div></div>
+    <div class="alert-title">Alertes stock</div>
+    <div class="alert-list" id="side-alert-list-sf"><div class="no-alerts"> Tout est OK</div></div>
   </div>
   <div id="side-alerts-cm" class="alert-box" style="display:none;margin-top:8px">
-    <div class="alert-title">⚠ Alertes stock</div>
-    <div class="alert-list" id="side-alert-list-cm"><div class="no-alerts">✓ Tout est OK</div></div>
+    <div class="alert-title">Alertes stock</div>
+    <div class="alert-list" id="side-alert-list-cm"><div class="no-alerts"> Tout est OK</div></div>
   </div>
 
   <div class="sidebar-bottom">
@@ -350,7 +350,7 @@ body{background:var(--bg);color:var(--text1)}
   <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-left">
-      <span class="page-icon" id="tb-icon">📊</span>
+      <span class="page-icon" id="tb-icon"></span>
       <div>
         <div class="page-title" id="tb-title">DASHBOARD</div>
         <div class="page-sub" id="tb-sub">Vue d'ensemble</div>
@@ -412,33 +412,33 @@ body{background:var(--bg);color:var(--text1)}
 
       <div class="page" id="page-sf-boissons">
         <div class="filters-row">
-          <input class="search-input" type="text" id="search-sf-boissons" placeholder="🔍 Rechercher..." oninput="renderCat('sf','boissons')"/>
+          <input class="search-input" type="text" id="search-sf-boissons" placeholder=" Rechercher..." oninput="renderCat('sf','boissons')"/>
           <button class="filter-tab active" id="ftab-sf-boissons-all" onclick="setFilter('sf','boissons','all')">Tout</button>
-          <button class="filter-tab" id="ftab-sf-boissons-danger" onclick="setFilter('sf','boissons','danger')" style="color:var(--err)">🔴</button>
-          <button class="filter-tab" id="ftab-sf-boissons-warn" onclick="setFilter('sf','boissons','warn')" style="color:var(--warn)">🟡</button>
-          <button class="filter-tab" id="ftab-sf-boissons-ok" onclick="setFilter('sf','boissons','ok')" style="color:var(--ok)">🟢</button>
+          <button class="filter-tab" id="ftab-sf-boissons-danger" onclick="setFilter('sf','boissons','danger')" style="color:var(--err)"></button>
+          <button class="filter-tab" id="ftab-sf-boissons-warn" onclick="setFilter('sf','boissons','warn')" style="color:var(--warn)"></button>
+          <button class="filter-tab" id="ftab-sf-boissons-ok" onclick="setFilter('sf','boissons','ok')" style="color:var(--ok)"></button>
         </div>
         <div class="inv-wrap"><table class="inv-table"><thead><tr><th>Produit</th><th>Stock</th><th>Seuils</th><th>Statut</th><th>Jauge</th><th>Actions</th></tr></thead><tbody id="tbody-sf-boissons"></tbody></table></div>
       </div>
 
       <div class="page" id="page-sf-consommables">
         <div class="filters-row">
-          <input class="search-input" type="text" id="search-sf-consommables" placeholder="🔍 Rechercher..." oninput="renderCat('sf','consommables')"/>
+          <input class="search-input" type="text" id="search-sf-consommables" placeholder=" Rechercher..." oninput="renderCat('sf','consommables')"/>
           <button class="filter-tab active" id="ftab-sf-consommables-all" onclick="setFilter('sf','consommables','all')">Tout</button>
-          <button class="filter-tab" id="ftab-sf-consommables-danger" onclick="setFilter('sf','consommables','danger')" style="color:var(--err)">🔴</button>
-          <button class="filter-tab" id="ftab-sf-consommables-warn" onclick="setFilter('sf','consommables','warn')" style="color:var(--warn)">🟡</button>
-          <button class="filter-tab" id="ftab-sf-consommables-ok" onclick="setFilter('sf','consommables','ok')" style="color:var(--ok)">🟢</button>
+          <button class="filter-tab" id="ftab-sf-consommables-danger" onclick="setFilter('sf','consommables','danger')" style="color:var(--err)"></button>
+          <button class="filter-tab" id="ftab-sf-consommables-warn" onclick="setFilter('sf','consommables','warn')" style="color:var(--warn)"></button>
+          <button class="filter-tab" id="ftab-sf-consommables-ok" onclick="setFilter('sf','consommables','ok')" style="color:var(--ok)"></button>
         </div>
         <div class="inv-wrap"><table class="inv-table"><thead><tr><th>Produit</th><th>Stock</th><th>Seuils</th><th>Statut</th><th>Jauge</th><th>Actions</th></tr></thead><tbody id="tbody-sf-consommables"></tbody></table></div>
       </div>
 
       <div class="page" id="page-sf-alimentaire">
         <div class="filters-row">
-          <input class="search-input" type="text" id="search-sf-alimentaire" placeholder="🔍 Rechercher..." oninput="renderCat('sf','alimentaire')"/>
+          <input class="search-input" type="text" id="search-sf-alimentaire" placeholder=" Rechercher..." oninput="renderCat('sf','alimentaire')"/>
           <button class="filter-tab active" id="ftab-sf-alimentaire-all" onclick="setFilter('sf','alimentaire','all')">Tout</button>
-          <button class="filter-tab" id="ftab-sf-alimentaire-danger" onclick="setFilter('sf','alimentaire','danger')" style="color:var(--err)">🔴</button>
-          <button class="filter-tab" id="ftab-sf-alimentaire-warn" onclick="setFilter('sf','alimentaire','warn')" style="color:var(--warn)">🟡</button>
-          <button class="filter-tab" id="ftab-sf-alimentaire-ok" onclick="setFilter('sf','alimentaire','ok')" style="color:var(--ok)">🟢</button>
+          <button class="filter-tab" id="ftab-sf-alimentaire-danger" onclick="setFilter('sf','alimentaire','danger')" style="color:var(--err)"></button>
+          <button class="filter-tab" id="ftab-sf-alimentaire-warn" onclick="setFilter('sf','alimentaire','warn')" style="color:var(--warn)"></button>
+          <button class="filter-tab" id="ftab-sf-alimentaire-ok" onclick="setFilter('sf','alimentaire','ok')" style="color:var(--ok)"></button>
         </div>
         <div class="inv-wrap"><table class="inv-table"><thead><tr><th>Produit</th><th>Stock</th><th>Seuils</th><th>Statut</th><th>Jauge</th><th>Actions</th></tr></thead><tbody id="tbody-sf-alimentaire"></tbody></table></div>
       </div>
@@ -452,7 +452,7 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:14px;margin-bottom:18px">
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">⚙ Simulation service</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Simulation service</div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Nb couverts / ventes</label><input type="number" id="sf-mg-couverts" value="50" min="1" oninput="calcMargeSim('sf')" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">CA total (€)</label><input type="text" inputmode="decimal" id="sf-mg-ca-input" placeholder="0.00" oninput="calcMargeSim('sf')" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Panier moyen estimé</label><div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:7px 11px;font-family:monospace;font-size:13px;font-weight:700;color:var(--accent)" id="sf-mg-panier-est">—</div></div>
@@ -468,7 +468,7 @@ body{background:var(--bg);color:var(--text1)}
             </div>
           </div>
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700">💹 Roulement financier</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700"> Roulement financier</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
               <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Boissons</div><div style="font-family:monospace;font-size:15px;font-weight:700;color:var(--c1)" id="sf-rot-boissons">—</div><div style="font-size:10px;color:var(--muted)" id="sf-rot-boissons-sub">—</div></div>
               <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Consom.</div><div style="font-family:monospace;font-size:15px;font-weight:700;color:var(--c2)" id="sf-rot-consommables">—</div><div style="font-size:10px;color:var(--muted)" id="sf-rot-consommables-sub">—</div></div>
@@ -481,8 +481,8 @@ body{background:var(--bg);color:var(--text1)}
           <div style="padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700">Prix unitaires & marges</span>
             <div style="display:flex;gap:8px">
-              <input type="text" id="sf-mg-search" placeholder="🔍 Rechercher" oninput="renderMargeTable('sf')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);font-size:12px;outline:none;width:140px"/>
-              <select id="sf-mg-cat-filter" onchange="renderMargeTable('sf')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);font-size:12px;outline:none"><option value="">Toutes</option><option value="boissons">🥤 Boissons</option><option value="consommables">📦 Consommables</option><option value="alimentaire">🍔 Alimentaire</option></select>
+              <input type="text" id="sf-mg-search" placeholder=" Rechercher" oninput="renderMargeTable('sf')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);font-size:12px;outline:none;width:140px"/>
+              <select id="sf-mg-cat-filter" onchange="renderMargeTable('sf')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);font-size:12px;outline:none"><option value="">Toutes</option><option value="boissons"> Boissons</option><option value="consommables"> Consommables</option><option value="alimentaire"> Alimentaire</option></select>
             </div>
           </div>
           <table class="inv-table"><thead><tr><th>Produit</th><th>Catégorie</th><th>Stock</th><th>Prix achat (€)</th><th>Prix vente (€)</th><th>Marge €</th><th>Marge %</th><th>Valeur stock</th></tr></thead><tbody id="sf-mg-tbody"></tbody></table>
@@ -491,7 +491,7 @@ body{background:var(--bg);color:var(--text1)}
 
       <div class="page" id="page-sf-historique">
         <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
-          <input class="search-input" type="text" id="search-sf-hist" placeholder="🔍 Rechercher..." oninput="renderHist('sf')" style="max-width:340px"/>
+          <input class="search-input" type="text" id="search-sf-hist" placeholder=" Rechercher..." oninput="renderHist('sf')" style="max-width:340px"/>
           <button class="btn btn-ghost" onclick="clearHist('sf')">Vider</button>
         </div>
         <div id="sf-hist-list"></div>
@@ -543,7 +543,7 @@ body{background:var(--bg);color:var(--text1)}
               <div id="sf-doc-editor" contenteditable="true" style="padding:20px;outline:none;font-size:13px;line-height:1.8;overflow-y:auto;height:calc(100% - 88px)"></div>
             </div>
             <div id="sf-editor-empty" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);flex-direction:column;gap:12px">
-              <div style="font-size:40px">✍️</div>
+              <div style="font-size:40px"></div>
               <div style="font-size:13px">Créez ou sélectionnez un document</div>
             </div>
           </div>
@@ -559,14 +559,14 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
           <div class="inv-wrap" style="padding:18px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">💰 Coûts fixes vs variables</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Coûts fixes vs variables</div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Loyer / Emplacement (€/mois)</label><input type="text" inputmode="decimal" id="sf-st-loyer" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Assurances (€/mois)</label><input type="text" inputmode="decimal" id="sf-st-assurance" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Carburant / Énergie (€/mois)</label><input type="text" inputmode="decimal" id="sf-st-carbu" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Salaires chargés (€/mois)</label><input type="text" inputmode="decimal" id="sf-st-salaires" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:14px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Autres charges fixes (€/mois)</label><input type="text" inputmode="decimal" id="sf-st-autres" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="height:1px;background:var(--border);margin:14px 0"></div>
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700">📦 Coûts variables (€/mois)</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700"> Coûts variables (€/mois)</div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Achats matières premières</label><input type="text" inputmode="decimal" id="sf-st-matieres" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Emballages / consommables</label><input type="text" inputmode="decimal" id="sf-st-emballages" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Frais de marché / commissions</label><input type="text" inputmode="decimal" id="sf-st-commissions" placeholder="0" class="mg-inp" oninput="renderStatsCalc('sf')"></div>
@@ -574,12 +574,12 @@ body{background:var(--bg);color:var(--text1)}
             <div id="sf-st-couts-result"></div>
           </div>
           <div class="inv-wrap" style="padding:18px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">💳 Encaissements par moyen de paiement</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Encaissements par moyen de paiement</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">💵 Espèces</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--ok)" id="sf-pm-especes">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">💳 Carte bancaire</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--accent)" id="sf-pm-cb">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">📱 Virement / Lydia</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:#a78bfa" id="sf-pm-virement">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">🎟 Ticket repas</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--warn)" id="sf-pm-ticket">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Espèces</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--ok)" id="sf-pm-especes">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Carte bancaire</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--accent)" id="sf-pm-cb">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Virement / Lydia</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:#a78bfa" id="sf-pm-virement">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Ticket repas</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--warn)" id="sf-pm-ticket">0 €</div></div>
             </div>
             <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700">Ajouter encaissement</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end">
@@ -592,7 +592,7 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div class="inv-wrap" style="padding:18px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700">📊 CA par jour — ce mois</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700"> CA par jour — ce mois</div>
             <div style="font-size:11px;color:var(--muted)" id="sf-st-clock">—</div>
           </div>
           <div style="display:flex;gap:3px;align-items:flex-end;height:70px" id="sf-st-bars"></div>
@@ -643,7 +643,7 @@ body{background:var(--bg);color:var(--text1)}
               </div>
             </div>
             <div id="sf-fac-empty" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);flex-direction:column;gap:12px">
-              <div style="font-size:40px">🧾</div><div style="font-size:13px">Créez votre première facture</div>
+              <div style="font-size:40px"></div><div style="font-size:13px">Créez votre première facture</div>
             </div>
           </div>
         </div>
@@ -691,7 +691,7 @@ body{background:var(--bg);color:var(--text1)}
               </tr>
             </thead>
             <tbody id="sf-crm-tbody">
-              <tr><td colspan="9"><div class="empty-state"><div class="ei">👥</div>Aucun client — cliquez sur + Nouveau client</div></td></tr>
+              <tr><td colspan="9"><div class="empty-state"><div class="ei"></div>Aucun client — cliquez sur + Nouveau client</div></td></tr>
             </tbody>
           </table>
         </div>
@@ -875,22 +875,22 @@ body{background:var(--bg);color:var(--text1)}
 
       <div class="page" id="page-cm-consommables">
         <div class="filters-row">
-          <input class="search-input" type="text" id="search-cm-consommables" placeholder="🔍 Rechercher..." oninput="renderCat('cm','consommables')"/>
+          <input class="search-input" type="text" id="search-cm-consommables" placeholder=" Rechercher..." oninput="renderCat('cm','consommables')"/>
           <button class="filter-tab active" id="ftab-cm-consommables-all" onclick="setFilter('cm','consommables','all')">Tout</button>
-          <button class="filter-tab" id="ftab-cm-consommables-danger" onclick="setFilter('cm','consommables','danger')" style="color:var(--err)">🔴</button>
-          <button class="filter-tab" id="ftab-cm-consommables-warn" onclick="setFilter('cm','consommables','warn')" style="color:var(--warn)">🟡</button>
-          <button class="filter-tab" id="ftab-cm-consommables-ok" onclick="setFilter('cm','consommables','ok')" style="color:var(--ok)">🟢</button>
+          <button class="filter-tab" id="ftab-cm-consommables-danger" onclick="setFilter('cm','consommables','danger')" style="color:var(--err)"></button>
+          <button class="filter-tab" id="ftab-cm-consommables-warn" onclick="setFilter('cm','consommables','warn')" style="color:var(--warn)"></button>
+          <button class="filter-tab" id="ftab-cm-consommables-ok" onclick="setFilter('cm','consommables','ok')" style="color:var(--ok)"></button>
         </div>
         <div class="inv-wrap"><table class="inv-table"><thead><tr><th>Produit</th><th>Stock</th><th>Seuils</th><th>Statut</th><th>Jauge</th><th>Actions</th></tr></thead><tbody id="tbody-cm-consommables"></tbody></table></div>
       </div>
 
       <div class="page" id="page-cm-alimentaire">
         <div class="filters-row">
-          <input class="search-input" type="text" id="search-cm-alimentaire" placeholder="🔍 Rechercher..." oninput="renderCat('cm','alimentaire')"/>
+          <input class="search-input" type="text" id="search-cm-alimentaire" placeholder=" Rechercher..." oninput="renderCat('cm','alimentaire')"/>
           <button class="filter-tab active" id="ftab-cm-alimentaire-all" onclick="setFilter('cm','alimentaire','all')">Tout</button>
-          <button class="filter-tab" id="ftab-cm-alimentaire-danger" onclick="setFilter('cm','alimentaire','danger')" style="color:var(--err)">🔴</button>
-          <button class="filter-tab" id="ftab-cm-alimentaire-warn" onclick="setFilter('cm','alimentaire','warn')" style="color:var(--warn)">🟡</button>
-          <button class="filter-tab" id="ftab-cm-alimentaire-ok" onclick="setFilter('cm','alimentaire','ok')" style="color:var(--ok)">🟢</button>
+          <button class="filter-tab" id="ftab-cm-alimentaire-danger" onclick="setFilter('cm','alimentaire','danger')" style="color:var(--err)"></button>
+          <button class="filter-tab" id="ftab-cm-alimentaire-warn" onclick="setFilter('cm','alimentaire','warn')" style="color:var(--warn)"></button>
+          <button class="filter-tab" id="ftab-cm-alimentaire-ok" onclick="setFilter('cm','alimentaire','ok')" style="color:var(--ok)"></button>
         </div>
         <div class="inv-wrap"><table class="inv-table"><thead><tr><th>Produit</th><th>Stock</th><th>Seuils</th><th>Statut</th><th>Jauge</th><th>Actions</th></tr></thead><tbody id="tbody-cm-alimentaire"></tbody></table></div>
       </div>
@@ -904,7 +904,7 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:14px;margin-bottom:18px">
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">⚙ Simulation service</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Simulation service</div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Nb portions vendues</label><input type="number" id="cm-mg-couverts" value="40" min="1" oninput="calcMargeSim('cm')" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">CA total (€)</label><input type="text" inputmode="decimal" id="cm-mg-ca-input" placeholder="0.00" oninput="calcMargeSim('cm')" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Panier moyen estimé</label><div class="km-result" id="cm-mg-panier-est" style="padding:6px 10px;font-family:monospace;font-size:13px;font-weight:700;color:var(--accent)">—</div></div>
@@ -920,7 +920,7 @@ body{background:var(--bg);color:var(--text1)}
             </div>
           </div>
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700">💹 Roulement financier</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700"> Roulement financier</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
               <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Consommables</div><div style="font-family:monospace;font-size:15px;font-weight:700;color:var(--c1)" id="cm-rot-consommables">—</div><div style="font-size:10px;color:var(--muted)" id="cm-rot-consommables-sub">—</div></div>
               <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Fruits & Choco</div><div style="font-family:monospace;font-size:15px;font-weight:700;color:var(--c2)" id="cm-rot-alimentaire">—</div><div style="font-size:10px;color:var(--muted)" id="cm-rot-alimentaire-sub">—</div></div>
@@ -931,7 +931,7 @@ body{background:var(--bg);color:var(--text1)}
         <div class="inv-wrap">
           <div style="padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700">Prix unitaires & marges</span>
-            <div style="display:flex;gap:8px"><input type="text" id="cm-mg-search" placeholder="🔍" oninput="renderMargeTable('cm')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);font-size:12px;outline:none;width:140px"/><select id="cm-mg-cat-filter" onchange="renderMargeTable('cm')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);font-size:12px;outline:none"><option value="">Toutes</option><option value="consommables">🧾 Consommables</option><option value="alimentaire">🍓 Alimentaire</option></select></div>
+            <div style="display:flex;gap:8px"><input type="text" id="cm-mg-search" placeholder="" oninput="renderMargeTable('cm')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);font-size:12px;outline:none;width:140px"/><select id="cm-mg-cat-filter" onchange="renderMargeTable('cm')" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);font-size:12px;outline:none"><option value="">Toutes</option><option value="consommables"> Consommables</option><option value="alimentaire"> Alimentaire</option></select></div>
           </div>
           <table class="inv-table"><thead><tr><th>Produit</th><th>Catégorie</th><th>Stock</th><th>Prix achat (€)</th><th>Prix vente (€)</th><th>Marge €</th><th>Marge %</th><th>Valeur stock</th></tr></thead><tbody id="cm-mg-tbody"></tbody></table>
         </div>
@@ -960,7 +960,7 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">🔧 Paramètres du véhicule</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Paramètres du véhicule</div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Consommation (L/100km)</label><input type="number" id="km-conso" value="5" step=".1" oninput="calcKm()" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Prix carburant (€/L)</label><input type="number" id="km-prix-carbu" value="1.85" step=".01" oninput="calcKm()" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Entretien annuel (€)</label><input type="number" id="km-entretien" value="300" step="50" oninput="calcKm()" class="mg-inp"/></div>
@@ -970,7 +970,7 @@ body{background:var(--bg);color:var(--text1)}
             <div id="km-detail" class="km-result" style="margin-top:14px"></div>
           </div>
           <div class="kpi-card">
-            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">🚲 Simuler un trajet</div>
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Simuler un trajet</div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Départ</label><input type="text" id="km-depart" placeholder="ex: Nîmes Centre" class="mg-inp"/></div>
             <div style="margin-bottom:10px"><label class="mg-lbl">Destination</label><input type="text" id="km-dest" placeholder="ex: Foire de Nîmes" class="mg-inp"/></div>
             <div style="margin-bottom:14px"><label class="mg-lbl">Distance (km)</label><input type="number" id="km-dist" placeholder="ex: 12" min="0" step=".5" oninput="calcTrajet()" class="mg-inp"/></div>
@@ -993,7 +993,7 @@ body{background:var(--bg);color:var(--text1)}
 
       <div class="page" id="page-cm-historique">
         <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
-          <input class="search-input" type="text" id="search-cm-hist" placeholder="🔍 Rechercher..." oninput="renderHist('cm')" style="max-width:340px"/>
+          <input class="search-input" type="text" id="search-cm-hist" placeholder=" Rechercher..." oninput="renderHist('cm')" style="max-width:340px"/>
           <button class="btn btn-ghost" onclick="clearHist('cm')">Vider</button>
         </div>
         <div id="cm-hist-list"></div>
@@ -1020,7 +1020,7 @@ body{background:var(--bg);color:var(--text1)}
           <button class="btn btn-accent" onclick="openAddEvent()">+ Événement</button>
         </div>
         <div id="cal-list"></div>
-        <div class="empty-state" id="cal-empty" style="display:none"><div class="ei">📅</div>Aucun événement à venir</div>
+        <div class="empty-state" id="cal-empty" style="display:none"><div class="ei"></div>Aucun événement à venir</div>
       </div>
 
       <div class="page" id="page-cm-devis">
@@ -1054,7 +1054,7 @@ body{background:var(--bg);color:var(--text1)}
               <div id="cm-doc-editor" contenteditable="true" style="padding:20px;outline:none;font-size:13px;line-height:1.8;overflow-y:auto;height:calc(100% - 88px)"></div>
             </div>
             <div id="cm-editor-empty" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);flex-direction:column;gap:12px">
-              <div style="font-size:40px">✍️</div><div style="font-size:13px">Créez ou sélectionnez un document</div>
+              <div style="font-size:40px"></div><div style="font-size:13px">Créez ou sélectionnez un document</div>
             </div>
           </div>
         </div>
@@ -1069,14 +1069,14 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
           <div class="inv-wrap" style="padding:18px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">💰 Coûts fixes vs variables</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Coûts fixes vs variables</div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Loyer / Emplacement (€/mois)</label><input type="text" inputmode="decimal" id="cm-st-loyer" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Assurances (€/mois)</label><input type="text" inputmode="decimal" id="cm-st-assurance" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Carburant / Énergie (€/mois)</label><input type="text" inputmode="decimal" id="cm-st-carbu" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Salaires chargés (€/mois)</label><input type="text" inputmode="decimal" id="cm-st-salaires" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:14px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Autres charges fixes (€/mois)</label><input type="text" inputmode="decimal" id="cm-st-autres" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="height:1px;background:var(--border);margin:14px 0"></div>
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700">📦 Coûts variables (€/mois)</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:700"> Coûts variables (€/mois)</div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Achats matières premières</label><input type="text" inputmode="decimal" id="cm-st-matieres" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Emballages / consommables</label><input type="text" inputmode="decimal" id="cm-st-emballages" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
             <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Frais de marché / commissions</label><input type="text" inputmode="decimal" id="cm-st-commissions" placeholder="0" class="mg-inp" oninput="renderStatsCalc('cm')"></div>
@@ -1084,12 +1084,12 @@ body{background:var(--bg);color:var(--text1)}
             <div id="cm-st-couts-result"></div>
           </div>
           <div class="inv-wrap" style="padding:18px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700">💳 Encaissements par moyen de paiement</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700"> Encaissements par moyen de paiement</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">💵 Espèces</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--ok)" id="cm-pm-especes">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">💳 Carte bancaire</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--accent)" id="cm-pm-cb">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">📱 Virement / Lydia</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:#a78bfa" id="cm-pm-virement">0 €</div></div>
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px">🎟 Ticket repas</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--warn)" id="cm-pm-ticket">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Espèces</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--ok)" id="cm-pm-especes">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Carte bancaire</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--accent)" id="cm-pm-cb">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Virement / Lydia</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:#a78bfa" id="cm-pm-virement">0 €</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);margin-bottom:6px"> Ticket repas</div><div style="font-family:monospace;font-size:18px;font-weight:700;color:var(--warn)" id="cm-pm-ticket">0 €</div></div>
             </div>
             <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700">Ajouter encaissement</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end">
@@ -1102,7 +1102,7 @@ body{background:var(--bg);color:var(--text1)}
         </div>
         <div class="inv-wrap" style="padding:18px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700">📊 CA par jour — ce mois</div>
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700"> CA par jour — ce mois</div>
             <div style="font-size:11px;color:var(--muted)" id="cm-st-clock">—</div>
           </div>
           <div style="display:flex;gap:3px;align-items:flex-end;height:70px" id="cm-st-bars"></div>
@@ -1153,7 +1153,7 @@ body{background:var(--bg);color:var(--text1)}
               </div>
             </div>
             <div id="cm-fac-empty" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);flex-direction:column;gap:12px">
-              <div style="font-size:40px">🧾</div><div style="font-size:13px">Créez votre première facture</div>
+              <div style="font-size:40px"></div><div style="font-size:13px">Créez votre première facture</div>
             </div>
           </div>
         </div>
@@ -1239,7 +1239,7 @@ body{background:var(--bg);color:var(--text1)}
   </div><!-- /content -->
 </div><!-- /main -->
 
-<div class="save-indicator" id="save-ind">✓ Sauvegardé</div>
+<div class="save-indicator" id="save-ind"> Sauvegardé</div>
 
 <!-- ═══ MODALS ═══ -->
 <!-- MODAL EMPLOYE -->
@@ -1289,9 +1289,9 @@ body{background:var(--bg);color:var(--text1)}
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <div class="modal-title" id="doc-prev-title">APERÇU</div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-ghost" style="color:var(--ok)" onclick="openSigModal()">✍️ Signer</button>
-        <button class="btn btn-ghost" onclick="printDoc()">🖨️ Imprimer</button>
-        <button class="btn btn-ghost" onclick="document.getElementById('doc-preview-modal').style.display='none'">✕ Fermer</button>
+        <button class="btn btn-ghost" style="color:var(--ok)" onclick="openSigModal()"> Signer</button>
+        <button class="btn btn-ghost" onclick="printDoc()"> Imprimer</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('doc-preview-modal').style.display='none'"> Fermer</button>
       </div>
     </div>
     <div id="doc-prev-content" style="background:#fff;color:#111;padding:40px;border-radius:8px;font-family:Georgia,serif;font-size:13px;line-height:1.9"></div>
@@ -1301,11 +1301,11 @@ body{background:var(--bg);color:var(--text1)}
 <!-- MODAL SIGNATURE -->
 <div class="modal-overlay" id="sig-modal" style="display:none">
   <div class="modal" style="max-width:520px">
-    <div class="modal-title">✍️ SIGNATURE ÉLECTRONIQUE</div>
+    <div class="modal-title"> SIGNATURE ÉLECTRONIQUE</div>
     <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Signez dans le cadre blanc ci-dessous avec votre souris.</p>
     <canvas id="sigCanvas" width="460" height="150" style="background:#fff;border-radius:8px;cursor:crosshair;display:block;margin:0 auto;border:2px solid var(--border2)"></canvas>
     <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
-      <button class="btn btn-ghost" onclick="clearSig()">🗑 Effacer</button>
+      <button class="btn btn-ghost" onclick="clearSig()"> Effacer</button>
       <button class="btn btn-accent" onclick="applySig()"> Appliquer</button>
     </div>
   </div>
@@ -1341,7 +1341,7 @@ function initGenericDashboard() {
   
   // Mettre à jour le nom
   const logoEl = document.getElementById('logo-title');
-  if logoEl.textContent = business;
+  if (logoEl) logoEl.textContent = business;
   document.title = business + ' — Alma.co';
 
   // Masquer les nav items qui ne sont pas dans les modules choisis
@@ -1509,8 +1509,8 @@ function loadKmHist(){try{return JSON.parse(localStorage.getItem('cm_km')||'[]')
 function loadPrices(w){try{return JSON.parse(localStorage.getItem(w+'_prices')||'{}');}catch(e){return {};}}
 function savePrices(w,p){localStorage.setItem(w+'_prices',JSON.stringify(p));dbSet(w+'_prices',p);}
 
-let SF = loadState('inv_v1', []);
-let CM = loadState('inv_v1', []);
+let SF = loadState('gen_inv_v1', []);
+let CM = loadState('gen_inv_v2', []);
 let AMORT = loadAmort();
 let KM_HIST = loadKmHist();
 let currentWorld = 'sf';
@@ -1519,7 +1519,7 @@ let filters = {};
 
 function getState(w){return w==='sf'?SF:CM;}
 function saveState(w){
-  const key = w==='sf'?'sf_inv_v4':'cm_inv_v1';
+  const key = w==='sf'?'gen_inv_v1':'gen_inv_v2';
   const val = getState(w);
   // localStorage pour accès instantané
   localStorage.setItem(key, JSON.stringify(val));
@@ -1560,29 +1560,29 @@ function switchWorld(w){
 // NAVIGATION
 // ============================================================
 const PAGE_META = {
-  'sf-dashboard':{icon:'📊',title:'DASHBOARD',sub:'Vue d\'ensemble · Street Food'},
-  'sf-boissons':{icon:'🥤',title:'BOISSONS',sub:'Gestion des boissons'},
-  'sf-consommables':{icon:'📦',title:'CONSOMMABLES',sub:'Gestion des consommables'},
-  'sf-alimentaire':{icon:'🍔',title:'ALIMENTAIRE',sub:'Gestion des stocks alimentaires'},
-  'sf-marge':{icon:'📐',title:'CALCULATEUR MARGE',sub:'Marge nette · Roulement financier'},
-  'sf-historique':{icon:'📋',title:'HISTORIQUE',sub:'Journal des modifications'},
-  'sf-stats':{icon:'📈',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
-  'cm-dashboard':{icon:'📊',title:'DASHBOARD',sub:'Vue d\'ensemble · Croquez Moi'},
-  'cm-consommables':{icon:'🧾',title:'CONSOMMABLES',sub:'Cup · Fourchettes · Serviettes'},
-  'cm-alimentaire':{icon:'🍓',title:'FRUITS & CHOCOLAT',sub:'Fraises · Banane · Ananas · Chocolat'},
-  'cm-marge':{icon:'📐',title:'CALCULATEUR MARGE',sub:'Marge nette · Roulement financier'},
-  'cm-amortissement':{icon:'🔧',title:'AMORTISSEMENT',sub:'Triporteur · Fontaine à chocolat'},
-  'cm-kilometrique':{icon:'🚲',title:'FRAIS KILOMÉTRIQUES',sub:'Coût réel · Tarif à facturer'},
-  'cm-historique':{icon:'📋',title:'HISTORIQUE',sub:'Journal des modifications'},
-  'cm-stats':{icon:'📈',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
+  'sf-dashboard':{icon:'bar_chart',title:'DASHBOARD',sub:'Vue d\'ensemble · Street Food'},
+  'sf-boissons':{icon:'local_bar',title:'BOISSONS',sub:'Gestion des boissons'},
+  'sf-consommables':{icon:'inventory_2',title:'CONSOMMABLES',sub:'Gestion des consommables'},
+  'sf-alimentaire':{icon:'restaurant',title:'ALIMENTAIRE',sub:'Gestion des stocks alimentaires'},
+  'sf-marge':{icon:'calculate',title:'CALCULATEUR MARGE',sub:'Marge nette · Roulement financier'},
+  'sf-historique':{icon:'history',title:'HISTORIQUE',sub:'Journal des modifications'},
+  'sf-stats':{icon:'trending_up',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
+  'cm-dashboard':{icon:'bar_chart',title:'DASHBOARD',sub:'Vue d\'ensemble · Croquez Moi'},
+  'cm-consommables':{icon:'receipt',title:'CONSOMMABLES',sub:'Cup · Fourchettes · Serviettes'},
+  'cm-alimentaire':{icon:'restaurant',title:'FRUITS & CHOCOLAT',sub:'Fraises · Banane · Ananas · Chocolat'},
+  'cm-marge':{icon:'calculate',title:'CALCULATEUR MARGE',sub:'Marge nette · Roulement financier'},
+  'cm-amortissement':{icon:'build',title:'AMORTISSEMENT',sub:'Triporteur · Fontaine à chocolat'},
+  'cm-kilometrique':{icon:'directions_bike',title:'FRAIS KILOMÉTRIQUES',sub:'Coût réel · Tarif à facturer'},
+  'cm-historique':{icon:'history',title:'HISTORIQUE',sub:'Journal des modifications'},
+  'cm-stats':{icon:'trending_up',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
     'sf-caisse':{icon:'point_of_sale',title:'CAISSE CONNECTÉE',sub:'Synchronisation automatique des ventes'},
   'sf-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Street Food · Gestion clients'},
   'cm-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Croquez Moi · Gestion clients'},
-  'sf-employes':{icon:'👷',title:'COÛTS EMPLOYÉS',sub:'Street Food · Charges salariales'},
-  'sf-devis':{icon:'📝',title:'DEVIS & CONTRATS',sub:'Street Food · Jean-Philippe Profeti · SIREN 907 560 676'},
-  'cm-employes':{icon:'👷',title:'COÛTS EMPLOYÉS',sub:'Croquez Moi · Charges salariales'},
-  'cm-calendrier':{icon:'📅',title:'CALENDRIER',sub:'Événements à venir · Croquez Moi'},
-  'cm-devis':{icon:'📝',title:'DEVIS & CONTRATS',sub:'Croquez Moi · Jean-Philippe Profeti · SIREN 907 560 676'},
+  'sf-employes':{icon:'badge',title:'COÛTS EMPLOYÉS',sub:'Street Food · Charges salariales'},
+  'sf-devis':{icon:'description',title:'DEVIS & CONTRATS',sub:'Street Food · Jean-Philippe Profeti · SIREN 907 560 676'},
+  'cm-employes':{icon:'badge',title:'COÛTS EMPLOYÉS',sub:'Croquez Moi · Charges salariales'},
+  'cm-calendrier':{icon:'calendar_month',title:'CALENDRIER',sub:'Événements à venir · Croquez Moi'},
+  'cm-devis':{icon:'description',title:'DEVIS & CONTRATS',sub:'Croquez Moi · Jean-Philippe Profeti · SIREN 907 560 676'},
 };
 
 function goPage(pid,el,noSave){
@@ -1591,8 +1591,8 @@ function goPage(pid,el,noSave){
   document.querySelectorAll(`#world-${w} .page`).forEach(p=>p.classList.remove('active'));
   const pg=document.getElementById('page-'+pid);if(pg)pg.classList.add('active');
   if(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
-  const m=PAGE_META[pid]||{icon:'📊',title:pid.toUpperCase(),sub:''};
-  document.getElementById('tb-icon').textContent=m.icon;
+  const m=PAGE_META[pid]||{icon:'bar_chart',title:pid.toUpperCase(),sub:''};
+  const tbIcon=document.getElementById('tb-icon'); if(tbIcon){tbIcon.className='ni material-symbols-outlined page-icon';tbIcon.style.fontSize='16px';tbIcon.style.fontVariationSettings="'wght' 400";tbIcon.textContent=m.icon;}
   document.getElementById('tb-title').textContent=m.title;
   document.getElementById('tb-sub').textContent=m.sub;
   const btn=document.getElementById('tb-main-btn');
@@ -1629,9 +1629,9 @@ function goPage(pid,el,noSave){
 function getStatus(p){if(p.stock<=p.danger)return'danger';if(p.stock<=p.warn)return'warn';return'ok';}
 function statusBadge(p){
   const s=getStatus(p);
-  if(s==='danger')return`<span class="status-danger">🔴 CRITIQUE</span>`;
-  if(s==='warn')return`<span class="status-warn">🟡 FAIBLE</span>`;
-  return`<span class="status-ok">🟢 OK</span>`;
+  if(s==='danger')return`<span class="status-danger">CRITIQUE</span>`;
+  if(s==='warn')return`<span class="status-warn">FAIBLE</span>`;
+  return`<span class="status-ok">OK</span>`;
 }
 function barColor(p){const s=getStatus(p);if(s==='danger')return'var(--danger)';if(s==='warn')return'var(--warn)';return'var(--ok)';}
 function barPct(p){return Math.min(100,Math.round((p.stock/(p.max||1))*100));}
@@ -1644,8 +1644,8 @@ function fEur0(n){return(parseFloat(n)||0).toLocaleString('fr-FR',{minimumFracti
 // ============================================================
 const CAT_COLORS={boissons:'#06B6D4',consommables:'#8B5CF6',alimentaire:'#F59E0B'};
 const CM_CAT_COLORS={consommables:'#f9a8d4',alimentaire:'#f472b6'};
-const CAT_ICONS={boissons:'🥤',consommables:'📦',alimentaire:'🍔'};
-const CM_CAT_ICONS={consommables:'🧾',alimentaire:'🍓'};
+const CAT_ICONS={boissons:'',consommables:'',alimentaire:''};
+const CM_CAT_ICONS={consommables:'',alimentaire:''};
 
 function setFilter(w,cat,f){
   const key=w+'-'+cat;filters[key]=f;
@@ -1664,7 +1664,7 @@ function renderCat(w,cat){
   if(q)prods=prods.filter(p=>p.nom.toLowerCase().includes(q));
   if(f!=='all')prods=prods.filter(p=>getStatus(p)===f);
   const tbody=document.getElementById('tbody-'+key);if(!tbody)return;
-  if(!prods.length){tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="ei">🔍</div>Aucun produit</div></td></tr>`;return;}
+  if(!prods.length){tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="ei">—</div>Aucun produit</div></td></tr>`;return;}
   const cc=w==='sf'?CAT_COLORS:CM_CAT_COLORS;
   tbody.innerHTML=prods.map(p=>`<tr>
     <td><div class="prod-name">${p.nom}</div><div style="font-size:10px;color:var(--muted)">${p.unit}</div></td>
@@ -1675,14 +1675,14 @@ function renderCat(w,cat){
       <span style="font-size:10px;color:var(--muted)">${p.unit}</span>
     </div></td>
     <td><div style="display:flex;align-items:center;gap:6px">
-      <span style="font-size:10px;color:var(--warn)">🟡</span><input class="thresh-input" type="number" value="${p.warn}" min="0" onchange="setThresh('${w}',${p.id},'warn',this.value)"/>
-      <span style="font-size:10px;color:var(--danger)">🔴</span><input class="thresh-input" type="number" value="${p.danger}" min="0" onchange="setThresh('${w}',${p.id},'danger',this.value)"/>
+      <span style="font-size:10px;color:var(--warn)"></span><input class="thresh-input" type="number" value="${p.warn}" min="0" onchange="setThresh('${w}',${p.id},'warn',this.value)"/>
+      <span style="font-size:10px;color:var(--danger)"></span><input class="thresh-input" type="number" value="${p.danger}" min="0" onchange="setThresh('${w}',${p.id},'danger',this.value)"/>
     </div></td>
     <td>${statusBadge(p)}</td>
     <td><div class="stock-bar-wrap"><div style="font-size:9px;color:var(--muted);margin-bottom:3px;font-family:'DM Mono',monospace">${barPct(p)}%</div><div class="stock-bar"><div class="stock-bar-fill" style="width:${barPct(p)}%;background:${barColor(p)}"></div></div></div></td>
     <td><div style="display:flex;gap:6px">
-      <button class="btn btn-ghost btn-sm" onclick="openAdj('${w}',${p.id})">✏️</button>
-      <button class="btn btn-ghost btn-sm" onclick="deleteProd('${w}',${p.id})" style="color:var(--danger)">🗑</button>
+      <button class="btn btn-ghost btn-sm" onclick="openAdj('${w}',${p.id})"></button>
+      <button class="btn btn-ghost btn-sm" onclick="deleteProd('${w}',${p.id})" style="color:var(--danger)"></button>
     </div></td>
   </tr>`).join('');
   const alerts=S.products.filter(p=>p.cat===cat&&getStatus(p)!=='ok').length;
@@ -1713,8 +1713,8 @@ function openAddModal(){
   ['pm-nom','pm-unit','pm-stock','pm-warn','pm-danger','pm-max'].forEach(id=>document.getElementById(id).value='');
   const cat=document.getElementById('pm-cat');
   cat.innerHTML=w==='sf'
-    ?'<option value="boissons">🥤 Boissons</option><option value="consommables">📦 Consommables</option><option value="alimentaire">🍔 Alimentaire</option>'
-    :'<option value="consommables">🧾 Consommables</option><option value="alimentaire">🍓 Alimentaire</option>';
+    ?'<option value="boissons"> Boissons</option><option value="consommables"> Consommables</option><option value="alimentaire"> Alimentaire</option>'
+    :'<option value="consommables"> Consommables</option><option value="alimentaire"> Alimentaire</option>';
   document.getElementById('prod-modal').classList.add('open');
 }
 function openAdj(w,id){
@@ -1783,7 +1783,7 @@ function renderDash(w){
     const al=document.getElementById(w+'-dash-alerts-'+cat);
     if(al){
       const dc=cp.filter(p=>getStatus(p)==='danger').length,wc=cp.filter(p=>getStatus(p)==='warn').length;
-      al.innerHTML=(dc>0?`<span style="font-size:10px;background:rgba(239,68,68,.12);color:var(--danger);padding:2px 8px;border-radius:99px;font-weight:600">🔴 ${dc} critique${dc>1?'s':''}</span>`:'')+(wc>0?`<span style="font-size:10px;background:rgba(245,158,11,.12);color:var(--warn);padding:2px 8px;border-radius:99px;font-weight:600">🟡 ${wc} faible${wc>1?'s':''}</span>`:'');
+      al.innerHTML=(dc>0?`<span style="font-size:10px;background:rgba(239,68,68,.12);color:var(--danger);padding:2px 8px;border-radius:99px;font-weight:600"> ${dc} critique${dc>1?'s':''}</span>`:'')+(wc>0?`<span style="font-size:10px;background:rgba(245,158,11,.12);color:var(--warn);padding:2px 8px;border-radius:99px;font-weight:600"> ${wc} faible${wc>1?'s':''}</span>`:'');
     }
   });
   const low=all.filter(p=>getStatus(p)!=='ok').sort((a,b)=>getStatus(a)==='danger'?-1:1);
@@ -1791,7 +1791,7 @@ function renderDash(w){
   if(lb){
     if(!low.length){lb.innerHTML='';if(le)le.style.display='block';}
     else{if(le)le.style.display='none';const cc=w==='sf'?CAT_COLORS:CM_CAT_COLORS;const ci=w==='sf'?CAT_ICONS:CM_CAT_ICONS;
-      lb.innerHTML=low.map(p=>`<tr><td><div class="prod-name">${p.nom}</div></td><td><span style="background:${(cc[p.cat]||'#888')}22;color:${cc[p.cat]||'#888'};padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600">${ci[p.cat]||'📦'} ${p.cat}</span></td><td style="font-family:'DM Mono',monospace;font-weight:600">${fmt(p.stock)} ${p.unit}</td><td>${statusBadge(p)}</td></tr>`).join('');
+      lb.innerHTML=low.map(p=>`<tr><td><div class="prod-name">${p.nom}</div></td><td><span style="background:${(cc[p.cat]||'#888')}22;color:${cc[p.cat]||'#888'};padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600">${p.cat}</span></td><td style="font-family:'DM Mono',monospace;font-weight:600">${fmt(p.stock)} ${p.unit}</td><td>${statusBadge(p)}</td></tr>`).join('');
     }
   }
   renderSideAlerts(w);
@@ -1822,7 +1822,7 @@ function renderHist(w){
   let hist=S.history||[];
   if(q)hist=hist.filter(h=>h.nom.toLowerCase().includes(q)||(h.reason||'').toLowerCase().includes(q));
   const el=document.getElementById(w+'-hist-list');if(!el)return;
-  if(!hist.length){el.innerHTML='<div class="empty-state"><div class="ei">📋</div>Aucun historique</div>';return;}
+  if(!hist.length){el.innerHTML='<div class="empty-state"><div class="ei"></div>Aucun historique</div>';return;}
   const cc=w==='sf'?CAT_COLORS:CM_CAT_COLORS;
   el.innerHTML=hist.map(h=>`<div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;font-size:12px">
     <div style="flex:1"><div style="font-weight:600;color:var(--white);font-size:13px">${h.nom}</div><div style="color:var(--muted2);margin-top:2px">${h.reason||'—'}</div></div>
@@ -1857,7 +1857,7 @@ function renderMargeTable(w){
     const col=cc[p.cat]||'#888';
     return `<tr style="border-bottom:1px solid var(--border)">
       <td style="padding:10px 14px"><div style="font-size:13px;font-weight:500;color:var(--white)">${p.nom}</div><div style="font-size:10px;color:var(--muted)">${p.unit}</div></td>
-      <td style="padding:10px 14px"><span style="background:${col}18;color:${col};padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600">${ci[p.cat]||'📦'} ${p.cat}</span></td>
+      <td style="padding:10px 14px"><span style="background:${col}18;color:${col};padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600">${p.cat}</span></td>
       <td style="padding:10px 14px;text-align:center;font-family:'DM Mono',monospace">${fmt(p.stock)}</td>
       <td style="padding:8px 10px;text-align:center"><input type="text" inputmode="decimal" placeholder="0.00" value="${a>0?a:''}" onchange="setPrice('${w}',${p.id},'achat',this.value)" oninput="setPrice('${w}',${p.id},'achat',this.value)" style="width:80px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;text-align:center"/></td>
       <td style="padding:8px 10px;text-align:center"><input type="text" inputmode="decimal" placeholder="0.00" value="${v>0?v:''}" onchange="setPrice('${w}',${p.id},'vente',this.value)" oninput="setPrice('${w}',${p.id},'vente',this.value)" style="width:80px;background:var(--bg3);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:5px 8px;color:#22c55e;font-family:'DM Mono',monospace;font-size:12px;outline:none;text-align:center"/></td>
@@ -1913,7 +1913,7 @@ function renderRoulement(w){
   const top=document.getElementById(w+'-top-margin');if(!top)return;
   const ranked=S.products.map(p=>{const pr=prices[p.id]||{};const a=pr.achat||0,v=pr.vente||0;return{...p,mu:v-a,mp:v>0?(v-a)/v*100:0,hp:a>0||v>0};}).filter(p=>p.hp&&p.mu>0).sort((a,b)=>b.mp-a.mp).slice(0,5);
   const cc=w==='sf'?CAT_COLORS:CM_CAT_COLORS;const ci=w==='sf'?CAT_ICONS:CM_CAT_ICONS;
-  top.innerHTML='<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Top marges</div>'+(ranked.length?ranked.map((p,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:16px">${i+1}</span><span style="font-size:16px">${ci[p.cat]||'📦'}</span><span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nom}</span><span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:#22c55e">${p.mp.toFixed(1)}%</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">Renseignez des prix</div>');
+  top.innerHTML='<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Top marges</div>'+(ranked.length?ranked.map((p,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:16px">${i+1}</span><span style="font-size:16px">${ci[p.cat]||''}</span><span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nom}</span><span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:#22c55e">${p.mp.toFixed(1)}%</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">Renseignez des prix</div>');
 }
 
 // ============================================================
@@ -1933,7 +1933,7 @@ function renderAmort(){
           <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--white)">${a.nom}</div>
           <div style="font-size:11px;color:var(--muted);margin-top:2px">Acheté en ${a.annee} · Durée de vie : ${a.duree} ans · Coût : ${fEur0(a.cout)}</div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="deleteAmort(${a.id})" style="color:var(--danger)">🗑</button>
+        <button class="btn btn-ghost btn-sm" onclick="deleteAmort(${a.id})" style="color:var(--danger)"></button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px">
         <div style="background:var(--bg3);border-radius:8px;padding:11px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Annuel</div><div style="font-family:'DM Mono',monospace;font-size:17px;font-weight:700;color:var(--accent)">${fEur0(annuel)}</div></div>
@@ -1946,7 +1946,7 @@ function renderAmort(){
         <div style="height:5px;background:var(--bg4);border-radius:99px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${col};border-radius:99px;transition:width .5s"></div></div>
       </div>
     </div>`;
-  }).join('')|'<div class="empty-state"><div class="ei">🔧</div>Aucun équipement</div>';
+  }).join('')|'<div class="empty-state"><div class="ei"></div>Aucun équipement</div>';
 }
 function addAmort(){
   const nom=document.getElementById('am-nom').value.trim();
@@ -2025,7 +2025,7 @@ function saveTrajet(){
 function renderKmHist(){
   const el=document.getElementById('km-hist');if(!el)return;
   el.innerHTML=KM_HIST.length?KM_HIST.map(t=>`<div style="background:var(--bg3);border-radius:7px;padding:9px 12px;font-size:12px;display:flex;align-items:center;gap:8px">
-    <span style="font-size:16px">🚲</span>
+    <span style="font-size:16px"></span>
     <div style="flex:1"><div style="color:var(--white)">${t.depart||'—'} → ${t.dest||'—'}</div><div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">${t.dist} km · ${t.date}</div></div>
     <div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--danger)">${fEur(t.cout)}</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ok)">${fEur(t.tarif)}</div></div>
     <button onclick="deleteTrajet(${t.id})" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:13px">×</button>
@@ -2090,8 +2090,8 @@ function renderEmployes(w){
       <td style="font-family:'DM Mono',monospace;color:var(--warn)">${b} €</td>
       <td style="font-family:'DM Mono',monospace;color:var(--danger);font-weight:700">${ch} €</td>
       <td style="display:flex;gap:6px">
-        <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEmp('${w}',${i})">✏️</button>
-        <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="delEmp('${w}',${i})">🗑</button>
+        <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEmp('${w}',${i})"></button>
+        <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="delEmp('${w}',${i})"></button>
       </td></tr>`;
   }).join(''):'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:30px;font-size:13px">Aucun employé — cliquez sur + Employé</td></tr>';
 }
@@ -2168,14 +2168,14 @@ function renderCalendrier(){
       </div>
       <div style="flex:1">
         <div style="font-size:15px;font-weight:700;margin-bottom:4px">${e.nom}</div>
-        <div style="font-size:12px;color:var(--muted2)">${e.heure?'🕐 '+e.heure+' · ':''}${e.lieu?'📍 '+e.lieu:''}</div>
+        <div style="font-size:12px;color:var(--muted2)">${e.heure?' '+e.heure+' · ':''}${e.lieu?' '+e.lieu:''}</div>
         ${e.notes?`<div style="font-size:11px;color:var(--muted);margin-top:5px">${e.notes}</div>`:''}
       </div>
       <div style="text-align:right;min-width:90px">
         <div style="font-size:13px;font-weight:700;color:${dcol}">${dtxt}</div>
         <div style="display:flex;gap:6px;margin-top:10px;justify-content:flex-end">
-          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEvent(${ri})">✏️</button>
-          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="delEvent(${ri})">🗑</button>
+          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEvent(${ri})"></button>
+          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="delEvent(${ri})"></button>
         </div>
       </div>
     </div>`;
@@ -2229,10 +2229,10 @@ function renderDocs(w){
   const list=document.getElementById(w+'-doc-list');
   list.innerHTML=docs[w].length?docs[w].map((d,i)=>{
     const badge=d.type==='contrat'?'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(100,200,255,.12);color:#64c8ff;font-weight:700">Contrat</span>':'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(255,180,80,.12);color:var(--warn);font-weight:700">Devis</span>';
-    const sigbadge=d.sig?'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(34,197,94,.12);color:#22C55E;font-weight:700;margin-left:3px">✍️</span>':'';
+    const sigbadge=d.sig?'<span style="font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(34,197,94,.12);color:#22C55E;font-weight:700;margin-left:3px"></span>':'';
     return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 13px;margin-bottom:8px;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='var(--border2)'" onmouseout="this.style.borderColor='var(--border)'" onclick="loadDoc('${w}',${i})">
       <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">
-        <span>${d.type==='contrat'?'📝':'📄'}</span>
+        <span>${d.type==='contrat'?'':''}</span>
         <span style="font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.title||'Sans titre'}</span>${badge}${sigbadge}
       </div>
       <div style="font-size:11px;color:var(--muted)">${d.montant?d.montant+' € · ':''}${new Date(d.date).toLocaleDateString('fr-FR')}</div>
@@ -2295,7 +2295,7 @@ function previewDoc(w){
     </div>
     <div style="color:#111;font-family:Georgia,serif">${curDoc.content||''}</div>
     ${curDoc.sig?`<div style="margin-top:30px;padding-top:16px;border-top:1px solid #ddd">
-      <div style="font-size:11px;color:#888;margin-bottom:6px">✍️ Signature électronique apposée le ${today}</div>
+      <div style="font-size:11px;color:#888;margin-bottom:6px"> Signature électronique apposée le ${today}</div>
       <img src="${curDoc.sig}" style="max-height:70px;border:1px solid #eee;border-radius:4px;padding:4px">
     </div>`:''}
   `;
@@ -2389,15 +2389,15 @@ function renderStatsCalc(w){
   result.innerHTML=`
     <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:11px;color:var(--muted)">🔒 Charges fixes totales</span>
+        <span style="font-size:11px;color:var(--muted)"> Charges fixes totales</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--danger)">${totalFix.toFixed(0)} €</span>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:11px;color:var(--muted)">📦 Coûts variables totaux${caMois>0?' ('+tauxVar+'% du CA)':''}</span>
+        <span style="font-size:11px;color:var(--muted)"> Coûts variables totaux${caMois>0?' ('+tauxVar+'% du CA)':''}</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--warn)">${totalVar.toFixed(0)} €</span>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:11px;color:var(--muted)">💰 CA encaissé ce mois</span>
+        <span style="font-size:11px;color:var(--muted)"> CA encaissé ce mois</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--ok)">${caMois.toFixed(0)} €</span>
       </div>
       <div style="height:1px;background:var(--border);margin:8px 0"></div>
@@ -2484,8 +2484,8 @@ function fEurFac(n){
 function parseNumFac(s){return parseFloat(String(s).replace(',','.'))||0;}
 
 // PAGE_META pour facturation
-PAGE_META['sf-factures'] = {icon:'🧾', title:'FACTURATION', sub:'Street Food · Jean-Philippe Profeti · SIREN 907 560 676'};
-PAGE_META['cm-factures'] = {icon:'🧾', title:'FACTURATION', sub:'Croquez Moi · Jean-Philippe Profeti · SIREN 907 560 676'};
+PAGE_META['sf-factures'] = {icon:'receipt', title:'FACTURATION', sub:'Street Food · Jean-Philippe Profeti · SIREN 907 560 676'};
+PAGE_META['cm-factures'] = {icon:'receipt', title:'FACTURATION', sub:'Croquez Moi · Jean-Philippe Profeti · SIREN 907 560 676'};
 
 // goPage factures
 const _origGoPage = goPage;
