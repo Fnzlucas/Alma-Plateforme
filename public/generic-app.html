@@ -16,18 +16,17 @@ body{height:100%;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing
 
 /* ─── VARIABLES ALMA+ ─── */
 :root{
-  --bg:#f8f8fc;--surface:#ffffff;
-  --border:#e8e7f0;--border2:#d4d2e8;
-  --text1:#0f0e1a;--text2:#3d3c52;--text3:#8b8aa0;
-  --primary:#3525cd;--primary-lt:#eeecfa;
-  --secondary:#712ae2;
-  --ok:#16a34a;--ok-lt:#dcfce7;
+  --bg:#f7f8fa;--surface:#ffffff;
+  --border:#e4e8f0;--border2:#c8d0e0;
+  --text1:#0f1729;--text2:#4a5568;--text3:#94a3b8;
+  --primary:#1e3a6e;--primary-lt:#eef2f9;
+  --secondary:#2563eb;
+  --ok:#1e3a6e;--ok-lt:#eef2f9;
   --warn:#f59e0b;--warn-lt:#fef9c3;
   --danger:#dc2626;--err:#dc2626;--danger-lt:#fee2e2;
-  --accent:#3525cd;--accent2:#712ae2;
-  --glow:rgba(53,37,205,.15);
-  /* Themes world (gardés pour la transition) */
-  --world-accent:#3525cd;
+  --accent:#2563eb;--accent2:#1e3a6e;
+  --glow:rgba(30,58,110,.12);
+  --world-accent:#1e3a6e;
 }
 
 /* ─── THEMES WORLD ─── */
@@ -53,7 +52,7 @@ body{background:var(--bg);color:var(--text1)}
 }
 .logo-name span.dot{color:var(--secondary)}
 .logo-name span.plus{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  background:linear-gradient(135deg,#1e3a6e,#2563eb);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .logo-sub{font-size:10px;color:var(--text3);letter-spacing:.5px;margin-top:3px}
@@ -66,7 +65,7 @@ body{background:var(--bg);color:var(--text1)}
   transition:all .12s;
 }
 .nav-item:hover{background:var(--primary-lt);color:var(--primary)}
-.nav-item.active{background:var(--primary-lt);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.nav-item.active{background:#eef2f9;color:#1e3a6e;border-left-color:#1e3a6e;font-weight:600}
 .nav-item .ni{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .nav-badge{
   margin-left:auto;font-size:10px;font-weight:700;
@@ -126,7 +125,7 @@ body{background:var(--bg);color:var(--text1)}
 }
 .btn-ghost{background:var(--bg);color:var(--text2);border:1px solid var(--border)}
 .btn-ghost:hover{background:var(--border);color:var(--text1)}
-.btn-accent{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}
+.btn-accent{background:linear-gradient(135deg,#1e3a6e,#2563eb);color:#fff}
 .btn-accent:hover{opacity:.9;box-shadow:0 2px 10px var(--glow)}
 .btn-ok{background:var(--ok);color:#fff;font-weight:700}
 .btn-sm{padding:4px 10px;font-size:11px;border-radius:6px}
@@ -2437,7 +2436,8 @@ function renderDocs(w){
 function newDoc(w,type){
   const today=new Date().toLocaleDateString('fr-FR');
   const n=String(docs[w].length+1).padStart(4,'0');
-  curDoc={w,idx:null,type,title:type==='contrat'?'Nouveau contrat':'Nouveau devis',montant:'',date:new Date().toISOString(),content:getTemplate(type,n,today),sig:null};
+  const entInfo=getEntrepriseInfo();
+  curDoc={w,idx:null,type,title:type==='contrat'?'Nouveau contrat':'Nouveau devis',montant:'',date:new Date().toISOString(),content:getTemplate(type,n,today,entInfo),sig:null};
   showEditor(w);
 }
 
@@ -2498,7 +2498,7 @@ function previewDoc(w){
 
 function printDoc(){
   const w=window.open('','_blank');
-  w.document.write('<html><head><title>'+curDoc.title+'</title><style>body{font-family:Georgia,serif;padding:40px;color:#111;font-size:13px;line-height:1.9}h2,h3{color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:7px 10px}th{background:#f5f5f5}</style></head><body>'+document.getElementById('doc-prev-content').innerHTML+'</body></html>');
+  w.document.write('<html><head><title>'+curDoc.title+'</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>body{font-family:Inter,sans-serif;padding:40px;color:#0f1729;font-size:13px;line-height:1.8}h2,h3{color:#1e3a6e}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:7px 10px}th{background:#f5f5f5}</style></head><body>'+document.getElementById('doc-prev-content').innerHTML+'</body></html>');
   w.document.close();w.print();
 }
 
@@ -2827,13 +2827,14 @@ function previewFacture(w){
   const date = document.getElementById(w+'-fac-date').value;
   const client = document.getElementById(w+'-fac-client').value||'[Client]';
   const siret = document.getElementById(w+'-fac-siret').value||'[SIRET]';
-  const accentCol = w==='sf'?'#FF6B2B':'#d4688a';
+  const accentCol = '#1e3a6e'; const ent=getEntrepriseInfo();
   const bizName=(function(){try{return JSON.parse(localStorage.getItem('entreprise_info')||'{}').nom||'Mon Entreprise';}catch(e){return 'Mon Entreprise';}})();
 
   const win = window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Facture ${num}</title>
+  <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
   <style>
-    body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;color:#111;font-size:13px}
+    body{font-family:'Inter',-apple-system,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;color:#0f1729;font-size:13px}
     table{width:100%;border-collapse:collapse}
     td,th{padding:8px 10px;border:1px solid #ddd}
     th{background:#f5f5f5;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
@@ -2851,7 +2852,7 @@ function previewFacture(w){
     <div>
       <div style="font-size:22px;font-weight:800;color:${accentCol}">${bizName}</div>
       <div style="font-size:11px;color:#666;margin-top:4px"></div>
-      <div style="font-size:11px;color:#666">N° TVA : ${document.getElementById(w+'-tva-emetteur')?.value||'FR__907560676'}</div>
+      <div style="font-size:11px;color:#666">N° TVA : ${document.getElementById(w+'-tva-emetteur')?.value||ent.siret?'FR'+ent.siret.replace(/\s/g,'').slice(0,11):''}</div>
     </div>
     <div style="text-align:right">
       <div style="font-size:20px;font-weight:800">FACTURE</div>
@@ -2863,9 +2864,10 @@ function previewFacture(w){
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
     <div style="padding:12px;background:#f9f9f9;border-radius:6px">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:6px">Émetteur</div>
-      <div><strong></strong></div>
-      <div style="color:#555">SIREN : </div>
-      <div style="color:#555">N° TVA intracommunautaire : ${document.getElementById(w+'-tva-emetteur')?.value||'FR__907560676'}</div>
+      <div><strong>${ent.nom||''}</strong></div>
+      <div style="color:#555">${ent.adresse||''}</div>
+      <div style="color:#555">${ent.tel||''}</div>
+      <div style="color:#555">SIREN : ${ent.siret||''}</div>
     </div>
     <div style="padding:12px;background:#f9f9f9;border-radius:6px">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:6px">Destinataire</div>
@@ -2888,53 +2890,10 @@ function previewFacture(w){
   <div class="mentions">
     Pénalités de retard : taux BCE majoré de 10 points — exigibles le lendemain de la date d'échéance (art. L.441-10 C. commerce).<br>
     Indemnité forfaitaire de recouvrement : 40 € (art. D.441-5 C. commerce).<br>
-    En cas de litige, Tribunal compétent de Nîmes (Gard).<br>
+    En cas de litige, Tribunal compétent du ressort du siège social.<br>
     <strong>Pour la facturation électronique conforme (obligatoire 2026) : déposez cette facture sur <a href="https://chorus-pro.gouv.fr/cpp/connexion" target="_blank">chorus-pro.gouv.fr</a></strong>
   </div>
-  
-<!-- MODAL PRODUIT -->
-<div class="modal-overlay" id="prod-modal">
-  <div class="modal" style="width:480px">
-    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
-    <input type="hidden" id="pm-id"/>
-    <input type="hidden" id="pm-world"/>
-    <div class="modal-grid">
-      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
-      <div class="modal-field"><label class="modal-label">Catégorie</label>
-        <select class="modal-input" id="pm-cat">
-          <option value="boissons">Boissons</option>
-          <option value="consommables">Consommables</option>
-          <option value="alimentaire">Alimentaire</option>
-        </select>
-      </div>
-      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
-      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Seuil alerte</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Seuil critique</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
-    </div>
-  </div>
-</div>
-<!-- MODAL AJUSTEMENT -->
-<div class="modal-overlay" id="adj-modal">
-  <div class="modal" style="width:380px">
-    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
-    <input type="hidden" id="adj-id"/>
-    <input type="hidden" id="adj-world"/>
-    <div style="margin-bottom:14px"><label class="modal-label">Stock actuel</label><div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div></div>
-    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
-    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue..."/></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
-    </div>
-  </div>
-</div>
-</body></html>`);
+  </body></html>`);
   win.document.close();
 }
 // ═══════════════════════════════════════════
