@@ -1343,7 +1343,7 @@ body{background:var(--bg);color:var(--text1)}
         <button class="btn btn-ghost" onclick="document.getElementById('doc-preview-modal').style.display='none'"> Fermer</button>
       </div>
     </div>
-    <div id="doc-prev-content" style="background:#fff;color:#111;padding:40px;border-radius:8px;font-family:Georgia,serif;font-size:13px;line-height:1.9"></div>
+    <div id="doc-prev-content" style="background:#fff;color:#0f1729;padding:40px;border-radius:8px;font-family:Inter,sans-serif;font-size:13px;line-height:1.8"></div>
   </div>
 </div>
 
@@ -1425,7 +1425,7 @@ function exportFacturesPDF(){
   const facs=(factures['sf']||[]).filter(f=>(f.date||'')>=start&&(f.date||'')<=end);
   const ent=getEntrepriseInfo();
   const w=window.open('','_blank');
-  w.document.write('<html><head><title>Factures '+start+' - '+end+'</title><style>body{font-family:Arial,sans-serif;padding:30px;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#f0f0f0;padding:8px;text-align:left;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}h1{font-size:18px}</style></head><body>');
+  w.document.write('<html><head><title>Factures '+start+' - '+end+'</title><style>body{font-family:Inter,sans-serif;padding:30px;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#f0f0f0;padding:8px;text-align:left;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}h1{font-size:18px}</style></head><body>');
   w.document.write('<h1>Factures — '+ent.nom+'</h1><p>Période : '+start+' au '+end+'</p>');
   w.document.write('<table><tr><th>N°</th><th>Date</th><th>Client</th><th>Montant</th><th>Statut</th></tr>');
   facs.forEach(f=>w.document.write('<tr><td>'+f.num+'</td><td>'+f.date+'</td><td>'+f.client+'</td><td>'+fEur(f.montant)+'</td><td>'+f.statut+'</td></tr>'));
@@ -2472,7 +2472,7 @@ function previewDoc(w){
     curDoc.content=document.getElementById(w+'-doc-editor').innerHTML;
   }
   const today=new Date().toLocaleDateString('fr-FR');
-  const accentCol=w==='sf'?'#FF6B2B':'#d4688a';
+  const accentCol='#1e3a6e'; const ent=getEntrepriseInfo();
   const bizName=(function(){try{return JSON.parse(localStorage.getItem('entreprise_info')||'{}').nom||'Mon Entreprise';}catch(e){return 'Mon Entreprise';}})();
   document.getElementById('doc-prev-title').textContent=curDoc.title||'Document';
   document.getElementById('doc-prev-content').innerHTML=`
@@ -2487,7 +2487,7 @@ function previewDoc(w){
         ${curDoc.montant?`<div style="font-size:16px;font-weight:800;color:${accentCol};margin-top:4px">${curDoc.montant} €</div>`:''}
       </div>
     </div>
-    <div style="color:#111;font-family:Georgia,serif">${curDoc.content||''}</div>
+    <div style="color:#0f1729;font-family:Inter,sans-serif">${curDoc.content||''}</div>
     ${curDoc.sig?`<div style="margin-top:30px;padding-top:16px;border-top:1px solid #ddd">
       <div style="font-size:11px;color:#888;margin-bottom:6px"> Signature électronique apposée le ${today}</div>
       <img src="${curDoc.sig}" style="max-height:70px;border:1px solid #eee;border-radius:4px;padding:4px">
