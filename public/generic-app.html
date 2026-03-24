@@ -297,7 +297,6 @@ body{background:var(--bg);color:var(--text1)}
     <div class="nav-divider"></div>
     <div class="nav-item" data-page="sf-marge" onclick="goPage('sf-marge',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">calculate</span>Calculateur Marge</div>
     <div class="nav-item" data-page="sf-employes" onclick="goPage('sf-employes',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">badge</span>Coûts Employés</div>
-    <div class="nav-item" data-page="sf-devis" onclick="goPage('sf-devis',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">description</span>Devis & Contrats</div>
     <div class="nav-item" data-page="sf-factures" onclick="goPage('sf-factures',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">receipt</span>Facturation</div>
     <div class="nav-item" id="nav-caisse" data-page="sf-caisse" onclick="goPage('sf-caisse',this)" style="display:none"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">point_of_sale</span>Caisse</div>
     <div class="nav-item" data-page="sf-entreprise" onclick="goPage('sf-entreprise',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">business</span>Mon Entreprise</div>
@@ -1278,6 +1277,10 @@ body{background:var(--bg);color:var(--text1)}
 // ============================================================
 function getEntrepriseInfo(){try{return JSON.parse(localStorage.getItem('entreprise_info')||'{}');}catch(e){return {};}}
 function renderEntreprise(){
+  // Try to load from __INIT_DATA__ first (Supabase), then localStorage
+  if(window.__INIT_DATA__&&window.__INIT_DATA__.entreprise_info){
+    try{localStorage.setItem('entreprise_info',JSON.stringify(window.__INIT_DATA__.entreprise_info));}catch(e){}
+  }
   const info=getEntrepriseInfo();
   if(info.nom)document.getElementById('ent-nom').value=info.nom;
   if(info.siret)document.getElementById('ent-siret').value=info.siret;
