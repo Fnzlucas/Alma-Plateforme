@@ -1458,9 +1458,11 @@ function initGenericDashboard() {
   document.getElementById('nav-cm') && (document.getElementById('nav-cm').style.display = 'none');
   document.getElementById('world-cm') && (document.getElementById('world-cm').style.display = 'none');
   
-  // Cacher les devis avec infos JP
-  const devisItems = document.querySelectorAll('[data-page="sf-devis"],[data-page="cm-devis"]');
-  devisItems.forEach(el => el.style.display = 'none');
+  // Afficher devis seulement si module activé
+  if (!modules.includes('devis')) {
+    const devisItems = document.querySelectorAll('[data-page="sf-devis"],[data-page="cm-devis"]');
+    devisItems.forEach(el => el.style.display = 'none');
+  }
 }
 
 // Appeler après le DOM
