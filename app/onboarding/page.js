@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
  
 const MODULES = [
   { id: 'finances', label: 'Finances & Trésorerie', desc: 'CA, dépenses, marges, flux de tréso' },
-  { id: 'facturation', label: 'Facturation & Devis', desc: 'Factures, devis, relances auto' },
+  { id: 'facturation', label: 'Facturation', desc: 'Factures et relances automatiques' },
+  { id: 'devis', label: 'Devis & Contrats', desc: 'Créez et envoyez vos devis' },
   { id: 'stocks', label: 'Stocks & Inventaire', desc: 'Gestion produits, alertes rupture' },
   { id: 'crm', label: 'CRM Clients', desc: 'Historique, suivi, relances' },
   { id: 'equipe', label: 'Équipe & RH', desc: 'Plannings, congés, coûts employés' },
