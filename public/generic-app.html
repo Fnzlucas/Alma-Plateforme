@@ -2364,8 +2364,10 @@ function renderDocs(w){
 }
 
 function newDoc(w,type){
-  const ent=getEntrepriseInfo();
-  // Pre-fill emetteur info
+  const today=new Date().toLocaleDateString('fr-FR');
+  const n=String(docs[w].length+1).padStart(4,'0');
+  curDoc={w,idx:null,type,title:type==='contrat'?'Nouveau contrat':'Nouveau devis',montant:'',date:new Date().toISOString(),content:getTemplate(type,n,today),sig:null};
+  showEditor(w);
   setTimeout(()=>{
     const el=document.getElementById('sf-fac-emetteur-info')||document.getElementById('cm-fac-emetteur-info');
     if(el) el.textContent=(ent.siret?'SIREN '+ent.siret+' · ':'')+( ent.nom||'');
