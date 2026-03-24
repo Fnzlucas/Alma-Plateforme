@@ -297,7 +297,6 @@ body{background:var(--bg);color:var(--text1)}
     <div class="nav-divider"></div>
     <div class="nav-item" data-page="sf-marge" onclick="goPage('sf-marge',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">calculate</span>Calculateur Marge</div>
     <div class="nav-item" data-page="sf-employes" onclick="goPage('sf-employes',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">badge</span>Coûts Employés</div>
-    <div class="nav-item" data-page="sf-devis" onclick="goPage('sf-devis',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">description</span>Devis & Contrats</div>
     <div class="nav-item" data-page="sf-factures" onclick="goPage('sf-factures',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">receipt</span>Facturation</div>
     <div class="nav-item" data-page="sf-devis" onclick="goPage('sf-devis',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">description</span>Devis &amp; Contrats</div>
     <div class="nav-item" data-page="sf-entreprise" onclick="goPage('sf-entreprise',this)"><span class="ni material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 400">business</span>Mon Entreprise</div>
@@ -1694,7 +1693,6 @@ const PAGE_META = {
   'cm-stats':{icon:'trending_up',title:'STATISTIQUES',sub:'CA · Coûts · Encaissements'},
     'sf-caisse':{icon:'point_of_sale',title:'CAISSE CONNECTÉE',sub:'Synchronisation automatique des ventes'},
   'sf-entreprise':{icon:'business',title:'MON ENTREPRISE',sub:'Informations utilisées sur vos factures et devis'},
-  'sf-devis':{icon:'description',title:'DEVIS & CONTRATS',sub:'Créez et gérez vos devis et contrats'},
   'sf-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Street Food · Gestion clients'},
   'cm-crm':{icon:'contacts',title:'CRM CLIENTS',sub:'Croquez Moi · Gestion clients'},
   'sf-employes':{icon:'badge',title:'COÛTS EMPLOYÉS',sub:'Street Food · Charges salariales'},
@@ -2433,7 +2431,54 @@ function previewDoc(w){
 
 function printDoc(){
   const w=window.open('','_blank');
-  w.document.write('<html><head><title>'+curDoc.title+'</title><style>body{font-family:Georgia,serif;padding:40px;color:#111;font-size:13px;line-height:1.9}h2,h3{color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:7px 10px}th{background:#f5f5f5}</style></head><body>'+document.getElementById('doc-prev-content').innerHTML+'</body></html>');
+  w.document.write('<html><head><title>'+curDoc.title+'</title><style>body{font-family:Georgia,serif;padding:40px;color:#111;font-size:13px;line-height:1.9}h2,h3{color:#111}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:7px 10px}th{background:#f5f5f5}</style></head><body>'+document.getElementById('doc-prev-content').innerHTML+'
+<!-- MODAL PRODUIT -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal" style="width:480px">
+    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
+    <input type="hidden" id="pm-id"/>
+    <input type="hidden" id="pm-world"/>
+    <div class="modal-grid">
+      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
+      <div class="modal-field"><label class="modal-label">Catégorie</label>
+        <select class="modal-input" id="pm-cat">
+          <option value="boissons">Boissons</option>
+          <option value="consommables">Consommables</option>
+          <option value="alimentaire">Alimentaire</option>
+        </select>
+      </div>
+      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
+      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil alerte</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil critique</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJUSTEMENT STOCK -->
+<div class="modal-overlay" id="adj-modal">
+  <div class="modal" style="width:380px">
+    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
+    <input type="hidden" id="adj-id"/>
+    <input type="hidden" id="adj-world"/>
+    <div style="margin-bottom:14px">
+      <label class="modal-label">Stock actuel</label>
+      <div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div>
+    </div>
+    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
+    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue, Inventaire..."/></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
+    </div>
+  </div>
+</div>
+</body></html>');
   w.document.close();w.print();
 }
 
@@ -2826,7 +2871,54 @@ function previewFacture(w){
     En cas de litige, Tribunal compétent de Nîmes (Gard).<br>
     <strong>Pour la facturation électronique conforme (obligatoire 2026) : déposez cette facture sur <a href="https://chorus-pro.gouv.fr/cpp/connexion" target="_blank">chorus-pro.gouv.fr</a></strong>
   </div>
-  </body></html>`);
+  
+<!-- MODAL PRODUIT -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal" style="width:480px">
+    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
+    <input type="hidden" id="pm-id"/>
+    <input type="hidden" id="pm-world"/>
+    <div class="modal-grid">
+      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
+      <div class="modal-field"><label class="modal-label">Catégorie</label>
+        <select class="modal-input" id="pm-cat">
+          <option value="boissons">Boissons</option>
+          <option value="consommables">Consommables</option>
+          <option value="alimentaire">Alimentaire</option>
+        </select>
+      </div>
+      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
+      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil alerte</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil critique</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJUSTEMENT STOCK -->
+<div class="modal-overlay" id="adj-modal">
+  <div class="modal" style="width:380px">
+    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
+    <input type="hidden" id="adj-id"/>
+    <input type="hidden" id="adj-world"/>
+    <div style="margin-bottom:14px">
+      <label class="modal-label">Stock actuel</label>
+      <div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div>
+    </div>
+    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
+    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue, Inventaire..."/></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
+    </div>
+  </div>
+</div>
+</body></html>`);
   win.document.close();
 }
 // ═══════════════════════════════════════════
@@ -2974,5 +3066,52 @@ function cmCrmExport(){ crmExport('cm'); }
 
 
 </script>
+
+<!-- MODAL PRODUIT -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal" style="width:480px">
+    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
+    <input type="hidden" id="pm-id"/>
+    <input type="hidden" id="pm-world"/>
+    <div class="modal-grid">
+      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
+      <div class="modal-field"><label class="modal-label">Catégorie</label>
+        <select class="modal-input" id="pm-cat">
+          <option value="boissons">Boissons</option>
+          <option value="consommables">Consommables</option>
+          <option value="alimentaire">Alimentaire</option>
+        </select>
+      </div>
+      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
+      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil alerte</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
+      <div class="modal-field"><label class="modal-label">Seuil critique</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJUSTEMENT STOCK -->
+<div class="modal-overlay" id="adj-modal">
+  <div class="modal" style="width:380px">
+    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
+    <input type="hidden" id="adj-id"/>
+    <input type="hidden" id="adj-world"/>
+    <div style="margin-bottom:14px">
+      <label class="modal-label">Stock actuel</label>
+      <div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div>
+    </div>
+    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
+    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue, Inventaire..."/></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
