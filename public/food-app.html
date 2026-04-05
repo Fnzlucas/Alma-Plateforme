@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Plateforme Food</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
 <style>
-
 /* ─── RESET ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{height:100%}
@@ -270,11 +268,11 @@ body{background:var(--bg);color:var(--text1)}
   color:#1a1a2e!important;background-color:transparent!important;
 }
 #sf-doc-editor,#cm-doc-editor{background:#fafafa!important;color:#1a1a2e!important}
-
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body class="theme-sf">
-
 
 <div class="transition-overlay" id="trans-overlay"></div>
 
@@ -334,11 +332,6 @@ body{background:var(--bg);color:var(--text1)}
 
   <div class="sidebar-bottom">
     <div class="date-txt" id="sb-date"></div>
-    <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
-      <button onclick="syncSumup()" style="width:100%;padding:7px 10px;background:#eeecfa;border:1px solid #c4bcf5;border-radius:7px;color:#3525cd;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">Sync SumUp</button>
-      <button onclick="connectSumup()" style="width:100%;padding:7px 10px;background:#f8f8fc;border:1px solid #e8e7f0;border-radius:7px;color:#8b8aa0;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Connecter SumUp</button>
-      <button onclick="doLogout()" style="width:100%;padding:7px 10px;background:#fee2e2;border:1px solid #fca5a5;border-radius:7px;color:#dc2626;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">Déconnexion</button>
-    </div>
   </div>
 </nav>
 
@@ -1140,52 +1133,7 @@ body{background:var(--bg);color:var(--text1)}
 </div><!-- /main -->
 
 <div class="save-indicator" id="save-ind">✓ Sauvegardé</div>
-<!-- MODAL PRODUIT -->
-<div class="modal-overlay" id="prod-modal">
-  <div class="modal" style="width:480px">
-    <div class="modal-title" id="pm-title">NOUVEAU PRODUIT</div>
-    <input type="hidden" id="pm-id"/>
-    <input type="hidden" id="pm-world"/>
-    <div class="modal-grid">
-      <div class="modal-field" style="grid-column:1/-1"><label class="modal-label">Nom du produit *</label><input class="modal-input" type="text" id="pm-nom" placeholder="ex: Coca Cola 33cl"/></div>
-      <div class="modal-field"><label class="modal-label">Catégorie</label>
-        <select class="modal-input" id="pm-cat">
-          <option value="boissons">🥤 Boissons</option>
-          <option value="consommables">📦 Consommables</option>
-          <option value="alimentaire">🍔 Alimentaire</option>
-        </select>
-      </div>
-      <div class="modal-field"><label class="modal-label">Unité</label><input class="modal-input" type="text" id="pm-unit" placeholder="ex: bouteilles, kg, pièces"/></div>
-      <div class="modal-field"><label class="modal-label">Stock actuel</label><input class="modal-input" type="number" id="pm-stock" placeholder="0" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Stock max</label><input class="modal-input" type="number" id="pm-max" placeholder="50" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Seuil alerte 🟡</label><input class="modal-input" type="number" id="pm-warn" placeholder="5" min="0"/></div>
-      <div class="modal-field"><label class="modal-label">Seuil critique 🔴</label><input class="modal-input" type="number" id="pm-danger" placeholder="2" min="0"/></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-accent" onclick="saveProd()">Enregistrer</button>
-    </div>
-  </div>
-</div>
 
-<!-- MODAL AJUSTEMENT STOCK -->
-<div class="modal-overlay" id="adj-modal">
-  <div class="modal" style="width:380px">
-    <div class="modal-title" id="adj-title">AJUSTER LE STOCK</div>
-    <input type="hidden" id="adj-id"/>
-    <input type="hidden" id="adj-world"/>
-    <div style="margin-bottom:14px">
-      <label class="modal-label">Stock actuel</label>
-      <div style="font-size:22px;font-weight:800;color:var(--text1)" id="adj-current">—</div>
-    </div>
-    <div class="modal-field" style="margin-bottom:11px"><label class="modal-label">Nouveau stock</label><input class="modal-input" type="number" id="adj-val" placeholder="0" min="0"/></div>
-    <div class="modal-field"><label class="modal-label">Raison (optionnel)</label><input class="modal-input" type="text" id="adj-reason" placeholder="ex: Livraison reçue, Inventaire..."/></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-accent" onclick="saveAdj()">Valider</button>
-    </div>
-  </div>
-</div>
 <!-- ═══ MODALS ═══ -->
 <!-- MODAL EMPLOYE -->
 <div class="modal-overlay" id="emp-modal" style="display:none">
@@ -1258,28 +1206,7 @@ body{background:var(--bg);color:var(--text1)}
 
 
 
-
-<div class="save-indicator" id="save-ind">Sauvegardé</div>
 <script>
-async function dbSet(key,value){
-  const fn=window.dbSet||(window.parent&&window.parent.dbSet!==window.dbSet?window.parent.dbSet:null);
-  if(fn){fn(key,value);return;}
-  try{await fetch('/api/food-data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value})});}catch(e){}
-}
-async function dbGet(key){
-  const fn=window.dbGet||(window.parent&&window.parent.dbGet!==window.dbGet?window.parent.dbGet:null);
-  if(fn)return fn(key);
-  try{const r=await fetch('/api/food-data?key='+key);const d=await r.json();return d.value;}catch(e){return null;}
-}
-
-// ═══════ HELPERS PARENT ═══════
-function _parent(fn){ return (window[fn]) || (window.parent && window.parent[fn]); }
-function syncSumup(){ const f=_parent('foodSyncSumup'); if(f) f(typeof currentWorld!=='undefined'?currentWorld:'sf'); }
-function connectSumup(){ const f=_parent('foodConnectSumup'); if(f) f(); else window.top.location.href='/api/sumup/connect'; }
-function doLogout(){ const f=_parent('foodLogout'); if(f) f(); else window.top.location.href='/'; }
-// ══════════════════════════════
-
-
 
 // ============================================================
 // DONNÉES PAR DÉFAUT
@@ -1357,7 +1284,7 @@ function loadAmort(){
 }
 function loadKmHist(){try{return JSON.parse(localStorage.getItem('cm_km')||'[]');}catch(e){return [];}}
 function loadPrices(w){try{return JSON.parse(localStorage.getItem(w+'_prices')||'{}');}catch(e){return {};}}
-function savePrices(w,p){localStorage.setItem(w+'_prices',JSON.stringify(p));dbSet(w+'_prices',p);}
+function savePrices(w,p){localStorage.setItem(w+'_prices',JSON.stringify(p));}
 
 let SF = loadState('sf_inv_v4', SF_DEFAULT);
 let CM = loadState('cm_inv_v1', CM_DEFAULT);
@@ -1369,12 +1296,7 @@ let filters = {};
 
 function getState(w){return w==='sf'?SF:CM;}
 function saveState(w){
-  const key = w==='sf'?'sf_inv_v4':'cm_inv_v1';
-  const val = getState(w);
-  // localStorage pour accès instantané
-  localStorage.setItem(key, JSON.stringify(val));
-  // Supabase pour persistance
-  dbSet(key, val);
+  localStorage.setItem(w==='sf'?'sf_inv_v4':'cm_inv_v1', JSON.stringify(getState(w)));
   const el=document.getElementById('save-ind');el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800);
 }
 
@@ -1768,7 +1690,7 @@ function renderRoulement(w){
 // ============================================================
 // AMORTISSEMENT
 // ============================================================
-function saveAmort(){localStorage.setItem('cm_amort',JSON.stringify(AMORT));dbSet('cm_amort',AMORT);}
+function saveAmort(){localStorage.setItem('cm_amort',JSON.stringify(AMORT));}
 function renderAmort(){
   const el=document.getElementById('amort-list');if(!el)return;
   const now=new Date().getFullYear();
@@ -1867,7 +1789,7 @@ function saveTrajet(){
   const coutKm=((conso/100)*prixC)+((entret+assur)/kmAn);
   KM_HIST.unshift({id:Date.now(),depart:dep,dest:dst,dist,cout:coutKm*dist,tarif:coutKm*(1+marge/100)*dist,date:new Date().toLocaleString('fr-FR')});
   if(KM_HIST.length>50)KM_HIST=KM_HIST.slice(0,50);
-  localStorage.setItem('cm_km',JSON.stringify(KM_HIST));dbSet('cm_km',KM_HIST);
+  localStorage.setItem('cm_km',JSON.stringify(KM_HIST));
   renderKmHist();
   document.getElementById('km-total').textContent=KM_HIST.reduce((s,t)=>s+t.dist,0).toFixed(0);
 }
@@ -1882,7 +1804,7 @@ function renderKmHist(){
   const total=KM_HIST.reduce((s,t)=>s+t.dist,0);
   document.getElementById('km-total').textContent=total.toFixed(0);
 }
-function deleteTrajet(id){KM_HIST=KM_HIST.filter(t=>t.id!==id);localStorage.setItem('cm_km',JSON.stringify(KM_HIST));dbSet('cm_km',KM_HIST);renderKmHist();}
+function deleteTrajet(id){KM_HIST=KM_HIST.filter(t=>t.id!==id);localStorage.setItem('cm_km',JSON.stringify(KM_HIST));renderKmHist();}
 
 // ============================================================
 // EXPORT CSV
@@ -1916,7 +1838,7 @@ let employes = {sf:[], cm:[]};
 try{employes.sf=JSON.parse(localStorage.getItem('emp_sf')||'[]')}catch(e){}
 try{employes.cm=JSON.parse(localStorage.getItem('emp_cm')||'[]')}catch(e){}
 
-function saveEmps(w){try{localStorage.setItem('emp_'+w,JSON.stringify(employes[w]));dbSet('emp_'+w,employes[w]);}catch(e){}}
+function saveEmps(w){try{localStorage.setItem('emp_'+w,JSON.stringify(employes[w]))}catch(e){}}
 
 function calcBrut(e){return e.heures * e.taux * 52 / 12}
 
@@ -1994,41 +1916,130 @@ function saveEmp(){
 // ═══════ CALENDRIER ═══════
 let events=[];
 try{events=JSON.parse(localStorage.getItem('cal_events')||'[]')}catch(e){}
-function saveEvents(){try{localStorage.setItem('cal_events',JSON.stringify(events));dbSet('cal_events',events);}catch(e){}}
+function saveEvents(){try{localStorage.setItem('cal_events',JSON.stringify(events))}catch(e){}}
 
 function renderCalendrier(){
-  const today=new Date();today.setHours(0,0,0,0);
-  const up=events.filter(e=>new Date(e.date)>=today).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const list=document.getElementById('cal-list');
-  const empty=document.getElementById('cal-empty');
-  if(!up.length){list.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  list.innerHTML=up.map(e=>{
-    const d=new Date(e.date);
-    const diff=Math.round((d-today)/86400000);
-    const dtxt=diff===0?"Aujourd'hui !":diff===1?'Demain':`Dans ${diff} jours`;
-    const dcol=diff===0?'var(--danger)':diff<=3?'var(--warn)':'var(--ok)';
-    const ri=events.indexOf(e);
-    return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px">
-      <div style="min-width:58px;text-align:center;background:var(--bg3);border-radius:10px;padding:8px;border:1px solid var(--border2)">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">${d.toLocaleDateString('fr-FR',{month:'short'})}</div>
-        <div style="font-size:26px;font-weight:700;font-family:'DM Mono',monospace;line-height:1.2">${d.getDate()}</div>
-        <div style="font-size:10px;color:var(--muted)">${d.getFullYear()}</div>
-      </div>
-      <div style="flex:1">
-        <div style="font-size:15px;font-weight:700;margin-bottom:4px">${e.nom}</div>
-        <div style="font-size:12px;color:var(--muted2)">${e.heure?'🕐 '+e.heure+' · ':''}${e.lieu?'📍 '+e.lieu:''}</div>
-        ${e.notes?`<div style="font-size:11px;color:var(--muted);margin-top:5px">${e.notes}</div>`:''}
-      </div>
-      <div style="text-align:right;min-width:90px">
-        <div style="font-size:13px;font-weight:700;color:${dcol}">${dtxt}</div>
-        <div style="display:flex;gap:6px;margin-top:10px;justify-content:flex-end">
-          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEvent(${ri})">✏️</button>
-          <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="delEvent(${ri})">🗑</button>
-        </div>
-      </div>
+  const calEl = document.getElementById('cal-list');
+  const empty = document.getElementById('cal-empty');
+  if (!calEl) return;
+  empty.style.display = 'none';
+
+  // Navigation mois
+  if (!window._calYear) { const n=new Date(); window._calYear=n.getFullYear(); window._calMonth=n.getMonth(); }
+
+  const year = window._calYear;
+  const month = window._calMonth;
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay  = new Date(year, month+1, 0);
+  const daysInMonth = lastDay.getDate();
+  // Lundi = 0
+  let startDow = firstDay.getDay() - 1; if(startDow < 0) startDow = 6;
+
+  const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const JOURS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+  // Index des events par date
+  const evByDate = {};
+  (events||[]).forEach(e => {
+    const k = e.date ? e.date.slice(0,10) : '';
+    if (!evByDate[k]) evByDate[k] = [];
+    evByDate[k].push(e);
+  });
+
+  // Header navigation
+  let html = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <button onclick="window._calMonth--;if(window._calMonth<0){window._calMonth=11;window._calYear--;}renderCalendrier()"
+        style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text1);font-family:inherit">‹</button>
+      <div style="font-size:16px;font-weight:800;letter-spacing:-0.02em;color:var(--text1)">${MOIS[month]} ${year}</div>
+      <button onclick="window._calMonth++;if(window._calMonth>11){window._calMonth=0;window._calYear++;}renderCalendrier()"
+        style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text1);font-family:inherit">›</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px">
+      ${JOURS.map(j=>`<div style="text-align:center;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 0">${j}</div>`).join('')}
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">`;
+
+  // Cases vides avant le 1er
+  for(let i=0; i<startDow; i++){
+    html += `<div style="min-height:80px;border-radius:8px;background:var(--bg2);opacity:.3"></div>`;
+  }
+
+  // Cases du mois
+  for(let day=1; day<=daysInMonth; day++){
+    const dateStr = year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const isToday = new Date(year,month,day).getTime() === today.getTime();
+    const dayEvs = evByDate[dateStr] || [];
+    const isPast = new Date(year,month,day) < today;
+
+    html += `<div style="min-height:80px;border-radius:10px;background:${isToday?'rgba(var(--primary-rgb,0,85,212),0.08)':'var(--bg2)'};border:${isToday?'2px solid var(--primary)':'1px solid var(--border)'};padding:6px 7px;cursor:pointer;transition:.15s;opacity:${isPast&&!dayEvs.length?.5:1}"
+      onclick="openAddEventOnDate('${dateStr}')"
+      onmouseover="this.style.borderColor='var(--primary)'"
+      onmouseout="this.style.borderColor='${isToday?'var(--primary)':'var(--border)'}'">
+      <div style="font-size:12px;font-weight:${isToday?'800':'600'};color:${isToday?'var(--primary)':'var(--text1)'};margin-bottom:4px">${day}</div>
+      ${dayEvs.slice(0,3).map(e=>`
+        <div style="font-size:9px;font-weight:600;color:white;background:var(--primary);border-radius:4px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer"
+          onclick="event.stopPropagation();showEventDetail(${events.indexOf(e)})" title="${e.nom}">
+          ${e.heure?e.heure.slice(0,5)+' ':''} ${e.nom}
+        </div>`).join('')}
+      ${dayEvs.length>3?`<div style="font-size:9px;color:var(--muted);font-weight:600">+${dayEvs.length-3} autres</div>`:''}
     </div>`;
-  }).join('');
+  }
+
+  // Cases vides après le dernier jour
+  const totalCells = startDow + daysInMonth;
+  const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+  for(let i=0; i<remaining; i++){
+    html += `<div style="min-height:80px;border-radius:8px;background:var(--bg2);opacity:.3"></div>`;
+  }
+
+  html += `</div>
+
+  <!-- Légende events du mois -->
+  <div id="cal-month-events" style="margin-top:20px">
+    ${(events||[]).filter(e=>e.date&&e.date.slice(0,7)===(year+'-'+String(month+1).padStart(2,'0'))).length===0
+      ? '<div style="text-align:center;color:var(--muted);font-size:12px;padding:12px">Aucun événement ce mois</div>'
+      : (events||[]).filter(e=>e.date&&e.date.slice(0,7)===(year+'-'+String(month+1).padStart(2,'0')))
+          .sort((a,b)=>a.date.localeCompare(b.date))
+          .map(e=>{
+            const d=new Date(e.date); const ri=events.indexOf(e);
+            return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
+              <div style="min-width:40px;text-align:center;background:var(--primary);border-radius:8px;padding:6px;color:white">
+                <div style="font-size:18px;font-weight:800;line-height:1">${d.getDate()}</div>
+                <div style="font-size:9px;opacity:.8">${['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][d.getMonth()]}</div>
+              </div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:700;color:var(--text1)">${e.nom}</div>
+                <div style="font-size:11px;color:var(--muted2);margin-top:2px">${e.heure?'🕐 '+e.heure+' · ':''}${e.lieu?'📍 '+e.lieu:''}</div>
+              </div>
+              <div style="display:flex;gap:6px">
+                <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="editEvent(${ri})">✏️</button>
+                <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px;color:var(--danger)" onclick="deleteEvent(${ri})">🗑</button>
+              </div>
+            </div>`;
+          }).join('')
+    }
+  </div>`;
+
+  calEl.innerHTML = html;
+}
+
+function openAddEventOnDate(dateStr){
+  openAddEvent();
+  setTimeout(()=>{
+    const el = document.getElementById('ev-date');
+    if(el) el.value = dateStr;
+  }, 50);
+}
+
+function showEventDetail(idx){
+  const e = events[idx];
+  if(!e) return;
+  alert((e.nom||'') + '\n' + (e.heure?'Heure : '+e.heure+'\n':'') + (e.lieu?'Lieu : '+e.lieu+'\n':'') + (e.notes?'Notes : '+e.notes:''));
 }
 
 function openAddEvent(){
@@ -2072,7 +2083,7 @@ try{docs.sf=JSON.parse(localStorage.getItem('docs_sf')||'[]')}catch(e){}
 try{docs.cm=JSON.parse(localStorage.getItem('docs_cm')||'[]')}catch(e){}
 let curDoc={w:null,idx:null};
 
-function saveDocs(w){try{localStorage.setItem('docs_'+w,JSON.stringify(docs[w]));dbSet('docs_'+w,docs[w]);}catch(e){}}
+function saveDocs(w){try{localStorage.setItem('docs_'+w,JSON.stringify(docs[w]))}catch(e){}}
 
 function renderDocs(w){
   const list=document.getElementById(w+'-doc-list');
@@ -2202,9 +2213,9 @@ function applySig(){
 // STATISTIQUES
 // ============================================================
 function loadEnc(w){try{return JSON.parse(localStorage.getItem(w+'_enc')||'[]');}catch(e){return [];}}
-function saveEnc(w,d){localStorage.setItem(w+'_enc',JSON.stringify(d));dbSet(w+'_enc',d);}
+function saveEnc(w,d){localStorage.setItem(w+'_enc',JSON.stringify(d));}
 function loadCouts(w){try{return JSON.parse(localStorage.getItem(w+'_couts')||'{}');}catch(e){return {};}}
-function saveCouts(w,d){localStorage.setItem(w+'_couts',JSON.stringify(d));dbSet(w+'_couts',d);}
+function saveCouts(w,d){localStorage.setItem(w+'_couts',JSON.stringify(d));}
 
 function addEncaissement(w){
   const m=parseFloat(document.getElementById(w+'-enc-montant').value)||0;
@@ -2323,7 +2334,7 @@ try{factures.sf=JSON.parse(localStorage.getItem('sf_factures')||'[]')}catch(e){}
 try{factures.cm=JSON.parse(localStorage.getItem('cm_factures')||'[]')}catch(e){}
 
 function saveFacDb(w){
-  try{localStorage.setItem(w+'_factures', JSON.stringify(factures[w]));dbSet(w+'_factures',factures[w]);}catch(e){}
+  try{localStorage.setItem(w+'_factures', JSON.stringify(factures[w]));}catch(e){}
 }
 
 function fEurFac(n){
@@ -2554,7 +2565,7 @@ function previewFacture(w){
 function crmLoad(w){
   try{return JSON.parse(localStorage.getItem(w+'_crm')||'[]');}catch(e){return [];}
 }
-function crmSave(w,d){localStorage.setItem(w+'_crm',JSON.stringify(d));dbSet(w+'_crm',d);}
+function crmSave(w,d){localStorage.setItem(w+'_crm',JSON.stringify(d));}
 
 const STATUT_COLORS = {prospect:'var(--warn)',client:'var(--ok)',inactif:'var(--text3)'};
 const STATUT_BG = {prospect:'var(--warn-lt)',client:'var(--ok-lt)',inactif:'var(--border)'};
@@ -2682,6 +2693,125 @@ function sfCrmEdit(i){ crmEdit('sf',i); }
 function sfCrmDelete(i){ crmDelete('sf',i); }
 function sfCrmExport(){ crmExport('sf'); }
 
+
+// ═══════════════════════════════════
+// SUPABASE REALTIME — Kiosk Croquez Moi
+// ═══════════════════════════════════
+(function() {
+  const SUPA_URL = 'https://tzrtptpzbrszibuifzns.supabase.co';
+  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6cnRwdHB6YnJzemlidWlmem5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0OTM3MjQsImV4cCI6MjA2MDA2OTcyNH0.HaF4O6FMuamjXD-y7GH4V9iBBqXCPWuMp_7l55YHDJA';
+
+  // Charger les clients existants depuis Supabase au démarrage
+  async function syncKioskClients() {
+    try {
+      const resp = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&order=created_at.desc', {
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+      });
+      if (!resp.ok) return;
+      const rows = await resp.json();
+      rows.forEach(row => injectKioskClient(row, false));
+      crmRender('cm');
+    } catch(e) { console.warn('Supabase sync error:', e); }
+  }
+
+  // Injecter un client kiosk dans le CRM cm
+  function injectKioskClient(row, notify = true) {
+    const clients = crmLoad('cm');
+    // Éviter les doublons (même id Supabase)
+    const alreadyExists = clients.some(c => c._kiosk_id === row.id);
+    if (alreadyExists) return;
+
+    const entry = {
+      nom: (row.prenom || '') + ' ' + (row.nom || ''),
+      contact: row.prenom || '',
+      tel: row.telephone || '',
+      email: '',
+      statut: 'client',
+      ca: '',
+      action: '',
+      notes: 'Inscrit via kiosk le ' + new Date(row.created_at).toLocaleString('fr-FR'),
+      date: row.created_at ? row.created_at.slice(0, 10) : new Date().toISOString().slice(0, 10),
+      _kiosk_id: row.id
+    };
+
+    clients.unshift(entry);
+    crmSave('cm', clients);
+
+    if (notify) {
+      crmRender('cm');
+      showKioskNotif(entry.nom);
+    }
+  }
+
+  // Notification toast
+  function showKioskNotif(nom) {
+    let toast = document.getElementById('kiosk-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'kiosk-toast';
+      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a1a2e;color:white;padding:14px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:9999;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;transition:opacity .3s;font-family:inherit;border-left:3px solid #d4896a';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = '<span style="font-size:18px">🥖</span> Nouveau client kiosk : <strong>' + nom + '</strong>';
+    toast.style.opacity = '1';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 4000);
+  }
+
+  // Connexion Supabase Realtime via WebSocket
+  function connectRealtime() {
+    const wsUrl = SUPA_URL.replace('https://', 'wss://') + '/realtime/v1/websocket?apikey=' + SUPA_KEY + '&vsn=1.0.0';
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => {
+      console.log('[Kiosk] Realtime connecté');
+      // Joindre le canal de la table
+      ws.send(JSON.stringify({
+        topic: 'realtime:public:croquezmoi_clients',
+        event: 'phx_join',
+        payload: { config: { broadcast: { self: false }, presence: { key: '' }, postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients' }] } },
+        ref: '1'
+      }));
+    };
+
+    ws.onmessage = (msg) => {
+      try {
+        const data = JSON.parse(msg.data);
+        if (data.event === 'postgres_changes' || (data.payload && data.payload.data && data.payload.data.type === 'INSERT')) {
+          const row = data.payload?.data?.record || data.payload?.record;
+          if (row) injectKioskClient(row, true);
+        }
+      } catch(e) {}
+    };
+
+    ws.onclose = () => {
+      console.log('[Kiosk] Realtime déconnecté — reconnexion dans 5s');
+      setTimeout(connectRealtime, 5000);
+    };
+
+    ws.onerror = (e) => { console.warn('[Kiosk] WS error', e); };
+  }
+
+  // Indicateur de connexion dans le header
+  function addKioskIndicator() {
+    const header = document.querySelector('.header') || document.querySelector('header');
+    if (!header) return;
+    const dot = document.createElement('div');
+    dot.id = 'kiosk-dot';
+    dot.title = 'Kiosk connecté — clients en temps réel';
+    dot.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#d4896a;margin-left:auto;padding-right:16px;cursor:default';
+    dot.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:#d4896a;animation:pulse 2s infinite"></span>Kiosk actif';
+    header.appendChild(dot);
+  }
+
+  // Démarrage
+  window.addEventListener('DOMContentLoaded', () => {
+    syncKioskClients();
+    connectRealtime();
+    addKioskIndicator();
+  });
+})();
+
 // Fonctions nommées pour onclick (CM)
 function cmCrmRender(){ crmRender('cm'); }
 function cmCrmOpenModal(){ crmOpenModal('cm'); }
@@ -2690,7 +2820,6 @@ function cmCrmEdit(i){ crmEdit('cm',i); }
 function cmCrmDelete(i){ crmDelete('cm',i); }
 function cmCrmExport(){ crmExport('cm'); }
 // ═══════════════════════════════════
-
 
 </script>
 </body>
