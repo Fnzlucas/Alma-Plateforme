@@ -2701,26 +2701,10 @@ function sfCrmExport(){ crmExport('sf'); }
   const SUPA_URL = 'https://mpiugnnxpgzlfnltsqxe.supabase.co';
   const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waXVnbm54cGd6bGZubHRzcXhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzM2MjYsImV4cCI6MjA4ODg0OTYyNn0.F-UhZFNQGO2tBboq7Ne5czo-EQ3nHlo7cHFQLOmQeQ0';
 
-  // Charger les clients existants depuis Supabase au démarrage
-  async function syncKioskClients() {
-    try {
-      const resp = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&order=created_at.desc', {
-        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
-      });
-      if (!resp.ok) return;
-      const rows = await resp.json();
-      rows.forEach(row => injectKioskClient(row, false));
-      crmRender('cm');
-    } catch(e) { console.warn('Supabase sync error:', e); }
-  }
-
   // Injecter un client kiosk dans le CRM cm
-  function injectKioskClient(row, notify = true) {
+  function injectKioskClient(row, notify) {
     const clients = crmLoad('cm');
-    // Éviter les doublons (même id Supabase)
-    const alreadyExists = clients.some(c => c._kiosk_id === row.id);
-    if (alreadyExists) return;
-
+    if (clients.some(c => c._kiosk_id === row.id)) return;
     const entry = {
       nom: (row.prenom || '') + ' ' + (row.nom || ''),
       contact: row.prenom || '',
@@ -2730,20 +2714,15 @@ function sfCrmExport(){ crmExport('sf'); }
       ca: '',
       action: '',
       notes: 'Inscrit via kiosk le ' + new Date(row.created_at).toLocaleString('fr-FR'),
-      date: row.created_at ? row.created_at.slice(0, 10) : new Date().toISOString().slice(0, 10),
+      date: row.created_at ? row.created_at.slice(0,10) : new Date().toISOString().slice(0,10),
       _kiosk_id: row.id
     };
-
     clients.unshift(entry);
     crmSave('cm', clients);
-
-    if (notify) {
-      crmRender('cm');
-      showKioskNotif(entry.nom);
-    }
+    if (notify) { crmRender('cm'); showKioskNotif(entry.nom); }
   }
 
-  // Notification toast
+  // Toast notification
   function showKioskNotif(nom) {
     let toast = document.getElementById('kiosk-toast');
     if (!toast) {
@@ -2752,110 +2731,74 @@ function sfCrmExport(){ crmExport('sf'); }
       toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a1a2e;color:white;padding:14px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:9999;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;transition:opacity .3s;font-family:inherit;border-left:3px solid #d4896a';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = '<span style="font-size:18px">🥖</span> Nouveau client kiosk : <strong>' + nom + '</strong>';
+    toast.innerHTML = '<span style="font-size:18px">🥖</span> Nouveau client : <strong>' + nom + '</strong>';
     toast.style.opacity = '1';
     clearTimeout(toast._t);
-    toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 4000);
+    toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 5000);
   }
 
-  // Connexion Supabase Realtime via WebSocket
-  let _wsRef = 0;
-  function connectRealtime() {
-    const wsUrl = SUPA_URL.replace('https://', 'wss://') + '/realtime/v1/websocket?apikey=' + SUPA_KEY + '&vsn=1.0.0';
-    const ws = new WebSocket(wsUrl);
-    let heartbeat;
-    let joinRef = '1';
-
-    ws.onopen = () => {
-      console.log('[Kiosk] Realtime connecté');
-
-      // Heartbeat
-      heartbeat = setInterval(() => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ topic:'phoenix', event:'heartbeat', payload:{}, ref: String(++_wsRef) }));
-        }
-      }, 25000);
-
-      // Join avec le bon format Supabase Realtime v2
-      const msg = {
-        topic: 'realtime:public:croquezmoi_clients',
-        event: 'phx_join',
-        payload: {
-          config: {
-            broadcast: { self: false },
-            presence:  { key: '' },
-            postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients', filter: '' }]
-          },
-          access_token: SUPA_KEY
-        },
-        ref: joinRef
-      };
-      ws.send(JSON.stringify(msg));
-      console.log('[Kiosk] Join envoyé');
-    };
-
-    ws.onmessage = (msg) => {
-      try {
-        const data = JSON.parse(msg.data);
-        console.log('[Kiosk] MSG:', data.event, JSON.stringify(data).slice(0, 300));
-
-        // Nouveau client reçu — format Supabase Realtime v2
-        if (data.event === 'postgres_changes' && data.payload?.data?.type === 'INSERT') {
-          const record = data.payload.data.record;
-          console.log('[Kiosk] Nouveau client reçu:', record);
-          injectKioskClient(record, true);
-        }
-      } catch(e) { console.warn('[Kiosk] parse error', e); }
-    };
-
-    ws.onclose = (e) => {
-      clearInterval(heartbeat);
-      console.log('[Kiosk] Déconnecté (' + e.code + ') — reconnexion 5s');
-      setTimeout(connectRealtime, 5000);
-    };
-
-    ws.onerror = (e) => console.warn('[Kiosk] WS error', e);
-  }
-
-  // Indicateur de connexion dans le header
+  // Indicateur kiosk
   function addKioskIndicator() {
     const header = document.querySelector('.header') || document.querySelector('header');
-    if (!header) return;
+    if (!header || document.getElementById('kiosk-dot')) return;
     const dot = document.createElement('div');
     dot.id = 'kiosk-dot';
-    dot.title = 'Kiosk connecté — clients en temps réel';
     dot.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#d4896a;margin-left:auto;padding-right:16px;cursor:default';
     dot.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:#d4896a;animation:pulse 2s infinite"></span>Kiosk actif';
     header.appendChild(dot);
   }
 
-  // Polling fallback toutes les 15s pour ne rien rater
-  let _lastId = 0;
-  async function pollNewClients() {
+  // Charger tous les clients existants au démarrage
+  async function syncKioskClients() {
     try {
-      const resp = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&id=gt.' + _lastId + '&order=id.asc', {
+      const resp = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&order=created_at.desc', {
         headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
       });
       if (!resp.ok) return;
       const rows = await resp.json();
-      rows.forEach(row => {
-        if (row.id > _lastId) { _lastId = row.id; injectKioskClient(row, true); }
+      rows.forEach(row => injectKioskClient(row, false));
+      crmRender('cm');
+      console.log('[Kiosk] Sync initiale:', rows.length, 'clients');
+    } catch(e) { console.warn('[Kiosk] Sync error:', e); }
+  }
+
+  // Polling toutes les 8 secondes — plus fiable que le WebSocket
+  let _lastSync = new Date(0).toISOString();
+  async function poll() {
+    try {
+      const url = SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&created_at=gt.' + encodeURIComponent(_lastSync) + '&order=created_at.asc';
+      const resp = await fetch(url, {
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
       });
+      if (!resp.ok) return;
+      const rows = await resp.json();
+      if (rows.length) {
+        console.log('[Kiosk] Nouveaux clients via poll:', rows.length);
+        rows.forEach(row => injectKioskClient(row, true));
+        _lastSync = rows[rows.length - 1].created_at;
+      }
     } catch(e) {}
   }
 
   // Démarrage
   window.addEventListener('DOMContentLoaded', async () => {
     await syncKioskClients();
-    // Récupérer le dernier ID connu
-    const clients = crmLoad('cm');
-    const kioskClients = clients.filter(c => c._kiosk_id);
-    if (kioskClients.length) _lastId = Math.max(...kioskClients.map(c => c._kiosk_id));
-    
-    connectRealtime();
+    // Mettre à jour _lastSync avec le client le plus récent
+    const clients = crmLoad('cm').filter(c => c._kiosk_id);
+    if (clients.length && clients[0].notes) {
+      // Récupérer la date du plus récent depuis Supabase
+      try {
+        const r = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=created_at&order=created_at.desc&limit=1', {
+          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+        });
+        const d = await r.json();
+        if (d[0]) _lastSync = d[0].created_at;
+      } catch(e) {}
+    }
     addKioskIndicator();
-    // Polling toutes les 15s en backup
-    setInterval(pollNewClients, 15000);
+    // Polling toutes les 8 secondes
+    setInterval(poll, 8000);
+    console.log('[Kiosk] Polling démarré toutes les 8s');
   });
 })();
 
