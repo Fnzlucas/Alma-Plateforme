@@ -2764,67 +2764,57 @@ function sfCrmExport(){ crmExport('sf'); }
     const wsUrl = SUPA_URL.replace('https://', 'wss://') + '/realtime/v1/websocket?apikey=' + SUPA_KEY + '&vsn=1.0.0';
     const ws = new WebSocket(wsUrl);
     let heartbeat;
+    let joinRef = '1';
 
     ws.onopen = () => {
       console.log('[Kiosk] Realtime connecté');
 
-      // Heartbeat toutes les 25s pour garder la connexion
+      // Heartbeat
       heartbeat = setInterval(() => {
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ topic: 'phoenix', event: 'heartbeat', payload: {}, ref: String(++_wsRef) }));
+          ws.send(JSON.stringify({ topic:'phoenix', event:'heartbeat', payload:{}, ref: String(++_wsRef) }));
         }
       }, 25000);
 
-      // Rejoindre le canal postgres_changes
-      ws.send(JSON.stringify({
+      // Join avec le bon format Supabase Realtime v2
+      const msg = {
         topic: 'realtime:public:croquezmoi_clients',
         event: 'phx_join',
         payload: {
           config: {
-            postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients' }]
-          }
+            broadcast: { self: false },
+            presence:  { key: '' },
+            postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients', filter: '' }]
+          },
+          access_token: SUPA_KEY
         },
-        ref: String(++_wsRef)
-      }));
+        ref: joinRef
+      };
+      ws.send(JSON.stringify(msg));
+      console.log('[Kiosk] Join envoyé');
     };
 
     ws.onmessage = (msg) => {
       try {
         const data = JSON.parse(msg.data);
-        console.log('[Kiosk] WS msg:', data.event, JSON.stringify(data).slice(0,200));
+        console.log('[Kiosk] MSG:', data.event, JSON.stringify(data).slice(0, 300));
 
-        if (data.event === 'phx_reply' && data.payload?.status === 'ok') {
-          console.log('[Kiosk] Canal rejoint avec succès');
+        // Nouveau client reçu — format Supabase Realtime v2
+        if (data.event === 'postgres_changes' && data.payload?.data?.type === 'INSERT') {
+          const record = data.payload.data.record;
+          console.log('[Kiosk] Nouveau client reçu:', record);
+          injectKioskClient(record, true);
         }
-
-        // Format Supabase Realtime v2
-        if (data.event === 'postgres_changes') {
-          const record = data.payload?.data?.record;
-          if (record) { console.log('[Kiosk] INSERT v2:', record); injectKioskClient(record, true); return; }
-        }
-
-        // Format Supabase Realtime v1
-        if (data.payload?.type === 'INSERT') {
-          const record = data.payload?.record;
-          if (record) { console.log('[Kiosk] INSERT v1:', record); injectKioskClient(record, true); return; }
-        }
-
-        // Format broadcast générique
-        if (data.payload?.data?.type === 'INSERT') {
-          const record = data.payload?.data?.record;
-          if (record) { console.log('[Kiosk] INSERT broadcast:', record); injectKioskClient(record, true); return; }
-        }
-
       } catch(e) { console.warn('[Kiosk] parse error', e); }
     };
 
     ws.onclose = (e) => {
       clearInterval(heartbeat);
-      console.log('[Kiosk] Déconnecté (code ' + e.code + ') — reconnexion dans 5s');
+      console.log('[Kiosk] Déconnecté (' + e.code + ') — reconnexion 5s');
       setTimeout(connectRealtime, 5000);
     };
 
-    ws.onerror = (e) => { console.warn('[Kiosk] WS error', e); };
+    ws.onerror = (e) => console.warn('[Kiosk] WS error', e);
   }
 
   // Indicateur de connexion dans le header
