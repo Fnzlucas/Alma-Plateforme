@@ -2759,33 +2759,62 @@ function sfCrmExport(){ crmExport('sf'); }
   }
 
   // Connexion Supabase Realtime via WebSocket
+  let _wsRef = 0;
   function connectRealtime() {
     const wsUrl = SUPA_URL.replace('https://', 'wss://') + '/realtime/v1/websocket?apikey=' + SUPA_KEY + '&vsn=1.0.0';
     const ws = new WebSocket(wsUrl);
+    let heartbeat;
 
     ws.onopen = () => {
       console.log('[Kiosk] Realtime connecté');
-      // Joindre le canal de la table
+
+      // Heartbeat toutes les 25s pour garder la connexion
+      heartbeat = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ topic: 'phoenix', event: 'heartbeat', payload: {}, ref: String(++_wsRef) }));
+        }
+      }, 25000);
+
+      // Rejoindre le canal postgres_changes
       ws.send(JSON.stringify({
         topic: 'realtime:public:croquezmoi_clients',
         event: 'phx_join',
-        payload: { config: { broadcast: { self: false }, presence: { key: '' }, postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients' }] } },
-        ref: '1'
+        payload: {
+          config: {
+            postgres_changes: [{ event: 'INSERT', schema: 'public', table: 'croquezmoi_clients' }]
+          }
+        },
+        ref: String(++_wsRef)
       }));
     };
 
     ws.onmessage = (msg) => {
       try {
         const data = JSON.parse(msg.data);
-        if (data.event === 'postgres_changes' || (data.payload && data.payload.data && data.payload.data.type === 'INSERT')) {
-          const row = data.payload?.data?.record || data.payload?.record;
-          if (row) injectKioskClient(row, true);
+        console.log('[Kiosk] WS msg:', data.event, data.topic);
+
+        // Répondre au phx_reply pour confirmer le join
+        if (data.event === 'phx_reply' && data.payload?.status === 'ok') {
+          console.log('[Kiosk] Canal rejoint avec succès');
         }
-      } catch(e) {}
+
+        // Recevoir un INSERT
+        if (data.event === 'postgres_changes') {
+          const record = data.payload?.data?.record;
+          if (record) { console.log('[Kiosk] Nouveau client:', record); injectKioskClient(record, true); }
+        }
+
+        // Format alternatif Supabase
+        if (data.event === '*' || (data.payload?.type === 'INSERT')) {
+          const record = data.payload?.record || data.payload?.new;
+          if (record) { console.log('[Kiosk] Nouveau client (alt):', record); injectKioskClient(record, true); }
+        }
+      } catch(e) { console.warn('[Kiosk] parse error', e); }
     };
 
-    ws.onclose = () => {
-      console.log('[Kiosk] Realtime déconnecté — reconnexion dans 5s');
+    ws.onclose = (e) => {
+      clearInterval(heartbeat);
+      console.log('[Kiosk] Déconnecté (code ' + e.code + ') — reconnexion dans 5s');
       setTimeout(connectRealtime, 5000);
     };
 
@@ -2804,11 +2833,33 @@ function sfCrmExport(){ crmExport('sf'); }
     header.appendChild(dot);
   }
 
+  // Polling fallback toutes les 15s pour ne rien rater
+  let _lastId = 0;
+  async function pollNewClients() {
+    try {
+      const resp = await fetch(SUPA_URL + '/rest/v1/croquezmoi_clients?select=*&id=gt.' + _lastId + '&order=id.asc', {
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+      });
+      if (!resp.ok) return;
+      const rows = await resp.json();
+      rows.forEach(row => {
+        if (row.id > _lastId) { _lastId = row.id; injectKioskClient(row, true); }
+      });
+    } catch(e) {}
+  }
+
   // Démarrage
-  window.addEventListener('DOMContentLoaded', () => {
-    syncKioskClients();
+  window.addEventListener('DOMContentLoaded', async () => {
+    await syncKioskClients();
+    // Récupérer le dernier ID connu
+    const clients = crmLoad('cm');
+    const kioskClients = clients.filter(c => c._kiosk_id);
+    if (kioskClients.length) _lastId = Math.max(...kioskClients.map(c => c._kiosk_id));
+    
     connectRealtime();
     addKioskIndicator();
+    // Polling toutes les 15s en backup
+    setInterval(pollNewClients, 15000);
   });
 })();
 
