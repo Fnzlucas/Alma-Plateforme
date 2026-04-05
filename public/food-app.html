@@ -2791,24 +2791,30 @@ function sfCrmExport(){ crmExport('sf'); }
     ws.onmessage = (msg) => {
       try {
         const data = JSON.parse(msg.data);
-        console.log('[Kiosk] WS msg:', data.event, data.topic);
+        console.log('[Kiosk] WS msg:', data.event, JSON.stringify(data).slice(0,200));
 
-        // Répondre au phx_reply pour confirmer le join
         if (data.event === 'phx_reply' && data.payload?.status === 'ok') {
           console.log('[Kiosk] Canal rejoint avec succès');
         }
 
-        // Recevoir un INSERT
+        // Format Supabase Realtime v2
         if (data.event === 'postgres_changes') {
           const record = data.payload?.data?.record;
-          if (record) { console.log('[Kiosk] Nouveau client:', record); injectKioskClient(record, true); }
+          if (record) { console.log('[Kiosk] INSERT v2:', record); injectKioskClient(record, true); return; }
         }
 
-        // Format alternatif Supabase
-        if (data.event === '*' || (data.payload?.type === 'INSERT')) {
-          const record = data.payload?.record || data.payload?.new;
-          if (record) { console.log('[Kiosk] Nouveau client (alt):', record); injectKioskClient(record, true); }
+        // Format Supabase Realtime v1
+        if (data.payload?.type === 'INSERT') {
+          const record = data.payload?.record;
+          if (record) { console.log('[Kiosk] INSERT v1:', record); injectKioskClient(record, true); return; }
         }
+
+        // Format broadcast générique
+        if (data.payload?.data?.type === 'INSERT') {
+          const record = data.payload?.data?.record;
+          if (record) { console.log('[Kiosk] INSERT broadcast:', record); injectKioskClient(record, true); return; }
+        }
+
       } catch(e) { console.warn('[Kiosk] parse error', e); }
     };
 
